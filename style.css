@@ -1,217 +1,235 @@
-/* Page styles */
-.page {
-    min-height: 100vh;
-    background: #000000;
-    padding: 20px;
-    padding-bottom: 80px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+body {
+    background: #000;
+    color: #fff;
+}
+
+.app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    background: #000;
+}
+
+/* Шапка */
+.header {
+    margin-bottom: 30px;
+}
+
+.balance {
+    font-size: 48px;
+    font-weight: bold;
+    color: #00ff88;
+    margin-bottom: 5px;
+}
+
+.header-info {
+    display: flex;
+    gap: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.commission {
+    color: #00ff88;
+}
+
+/* Вкладки */
+.tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+
+.tab {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.tab.active {
+    color: #00ff88;
+    border-bottom: 2px solid #00ff88;
+}
+
+/* Quick find */
+.quick-find {
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    cursor: pointer;
+}
+
+.quick-find i {
+    color: #00ff88;
+}
+
+/* Сетка кнопок */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.button-item {
+    background: #111;
+    border-radius: 10px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.button-item i {
+    font-size: 24px;
+    color: #00ff88;
+}
+
+.button-item span {
+    font-size: 12px;
+    color: #fff;
+}
+
+/* Нижняя навигация */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background: #111;
+    border-top: 1px solid #222;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 22px;
+}
+
+.nav-item span {
+    font-size: 12px;
+}
+
+/* Страницы */
 .page-header {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 30px;
-    padding-top: 10px;
 }
 
-.back-button {
+.back-btn {
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background: #1a1a1a;
+    background: #111;
     border: none;
     color: #00ff88;
     font-size: 20px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
 }
 
-.back-button:hover {
-    background: #2a2a2a;
-    transform: translateX(-2px);
-}
-
-.page-header h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-/* Profile page */
-.profile-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.profile-avatar {
-    margin-bottom: 15px;
-}
-
-.profile-avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid #00ff88;
-}
-
-.profile-name {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.profile-username {
-    font-size: 16px;
-    color: #808080;
-    margin-bottom: 25px;
-}
-
-.profile-stats {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #1a1a1a;
-    border-radius: 20px;
-    width: 100%;
-}
-
-.stat-item {
+/* Gift page */
+.gift-content {
     text-align: center;
-    flex: 1;
+    padding-top: 50px;
 }
 
-.stat-value {
-    font-size: 28px;
-    font-weight: 700;
+.nft-zero {
+    font-size: 48px;
+    font-weight: bold;
     color: #00ff88;
-    margin-bottom: 5px;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: #808080;
-}
-
-.profile-info {
-    width: 100%;
-    background: #1a1a1a;
-    border-radius: 20px;
-    padding: 20px;
     margin-bottom: 30px;
 }
 
-.info-item {
+.gift-buttons {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #2a2a2a;
-}
-
-.info-item:last-child {
-    border-bottom: none;
-}
-
-.info-label {
-    color: #808080;
-}
-
-.info-value {
-    color: #ffffff;
-    font-weight: 500;
-}
-
-/* Transactions */
-.transactions-section {
-    width: 100%;
-}
-
-.transactions-section h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #ffffff;
-}
-
-.transactions-list {
-    background: #1a1a1a;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.transaction-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #2a2a2a;
-}
-
-.transaction-item:last-child {
-    border-bottom: none;
-}
-
-.transaction-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: #2a2a2a;
-    display: flex;
-    align-items: center;
+    gap: 10px;
     justify-content: center;
-    margin-right: 15px;
 }
 
-.transaction-icon i {
-    color: #00ff88;
-    font-size: 18px;
-}
-
-.transaction-info {
-    flex: 1;
-}
-
-.transaction-title {
-    font-weight: 500;
-    margin-bottom: 3px;
-}
-
-.transaction-date {
-    font-size: 12px;
-    color: #808080;
-}
-
-.transaction-amount {
-    font-weight: 600;
-    color: #00ff88;
-}
-
-/* Manager chat button */
-.manager-chat-btn {
-    background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
-    color: #000000;
-    border: none;
+.replenish-btn, .withdraw-btn {
     padding: 15px 30px;
-    border-radius: 25px;
+    border: none;
+    border-radius: 10px;
     font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
-    display: inline-flex;
+}
+
+.replenish-btn {
+    background: #00ff88;
+    color: #000;
+}
+
+.withdraw-btn {
+    background: #111;
+    color: #fff;
+}
+
+/* Modal */
+#managerModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-    width: 100%;
     justify-content: center;
-    margin-top: 10px;
 }
 
-.manager-chat-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,255,136,0.3);
+.modal-content {
+    background: #111;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
 }
 
-.manager-chat-btn i {
-    font-size: 18px;
+.manager {
+    color: #00ff88;
+    font-size: 20px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.close-btn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 10px;
+    cursor: pointer;
 }
