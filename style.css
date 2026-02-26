@@ -16,57 +16,62 @@ body {
     min-height: 100vh;
     background: #0a0a0a;
     padding: 20px;
-    padding-bottom: 20px;
     position: relative;
 }
 
-/* Шапка */
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.balance-top {
+/* Маленький кошелек в правом верхнем углу */
+.wallet-corner {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     display: flex;
-    align-items: baseline;
-    justify-content: center;
+    align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 100;
 }
 
-.balance-amount {
-    font-size: 48px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.wallet-corner:hover {
+    transform: translateY(-2px);
+    border-color: #00ff88;
+    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
 }
 
-.balance-currency {
-    font-size: 24px;
-    color: #808080;
-    font-weight: 600;
-}
-
-.collections-count {
-    color: #808080;
-    margin-bottom: 8px;
+.wallet-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ff88;
     font-size: 16px;
 }
 
-.commission {
-    color: #00ff88;
-    font-size: 14px;
-    font-weight: 600;
-    background: rgba(0,255,136,0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-block;
+.wallet-info {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.wallet-balance {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.wallet-currency {
+    font-size: 12px;
+    color: #808080;
+}
+
+/* Основное меню */
+.main-menu {
+    margin-top: 80px; /* Отступ чтобы не перекрывалось с кошельком */
 }
 
 /* Вкладки */
@@ -102,7 +107,7 @@ body {
     background: #1a1a1a;
     padding: 15px;
     border-radius: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -121,22 +126,22 @@ body {
     color: #00ff88;
 }
 
-/* Сетка элементов (Collection и Model) */
+/* Сетка для Collection и Model */
 .items-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .menu-item {
     background: #1a1a1a;
     border-radius: 15px;
-    padding: 20px 10px;
+    padding: 25px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
     transition: all 0.3s;
     border: 1px solid rgba(255,255,255,0.1);
@@ -149,13 +154,13 @@ body {
 }
 
 .item-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .collection-item .item-icon {
@@ -169,19 +174,19 @@ body {
 }
 
 .menu-item span {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     color: #ffffff;
 }
 
-/* Нижняя навигация (NFT, My gift, Profile) */
+/* Нижняя навигация (только NFT, My gift, Profile) */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
     background: #1a1a1a;
-    padding: 15px;
+    padding: 20px;
     border-radius: 30px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -189,7 +194,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
     cursor: pointer;
     color: #808080;
     transition: all 0.3s;
@@ -202,60 +207,12 @@ body {
 }
 
 .nav-item i {
-    font-size: 22px;
+    font-size: 24px;
 }
 
 .nav-item span {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
-}
-
-/* Нижние кнопки (Back, Store, Season) */
-.bottom-actions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.action-btn {
-    background: #1a1a1a;
-    border-radius: 15px;
-    padding: 15px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.action-btn:hover {
-    transform: translateY(-2px);
-    border-color: #00ff88;
-    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
-}
-
-.action-btn i {
-    font-size: 22px;
-}
-
-.action-btn span {
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.back-item i {
-    color: #ff4b4b;
-}
-
-.store-item i {
-    color: #40a7e3;
-}
-
-.season-item i {
-    color: #ff00ff;
 }
 
 /* Анимации */
@@ -265,11 +222,11 @@ body {
     100% { transform: scale(1); }
 }
 
-.menu-item:active, .nav-item:active, .action-btn:active {
+.menu-item:active, .nav-item:active, .wallet-corner:active {
     animation: pulse 0.2s;
 }
 
-/* Стили для темной темы Telegram */
+/* Адаптация под темную тему Telegram */
 @media (prefers-color-scheme: dark) {
     body {
         background: #0a0a0a;
