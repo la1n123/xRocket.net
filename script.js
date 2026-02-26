@@ -31,12 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
 giftNavButton.addEventListener('click', function() {
     tg.HapticFeedback.impactOccurred('medium');
     
-    // Обновляем активное состояние навигации
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    giftNavButton.classList.add('active');
-    
     // Показываем страницу подарков, скрываем главное меню
     mainMenu.style.display = 'none';
     giftPage.style.display = 'block';
@@ -52,12 +46,6 @@ giftNavButton.addEventListener('click', function() {
 // Возврат в главное меню
 backFromGift.addEventListener('click', function() {
     tg.HapticFeedback.impactOccurred('light');
-    
-    // Возвращаем активное состояние на кнопку подарков
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    giftNavButton.classList.add('active');
     
     // Скрываем страницу подарков, показываем главное меню
     giftPage.style.display = 'none';
@@ -105,11 +93,9 @@ closeModal.addEventListener('click', function() {
 copyManager.addEventListener('click', function() {
     const managerText = managerUsername.textContent;
     
-    // Копируем в буфер обмена
     navigator.clipboard.writeText(managerText).then(() => {
         tg.HapticFeedback.notificationOccurred('success');
         
-        // Меняем текст кнопки временно
         const originalText = copyManager.innerHTML;
         copyManager.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
         
@@ -117,29 +103,18 @@ copyManager.addEventListener('click', function() {
             copyManager.innerHTML = originalText;
         }, 2000);
         
-        // Показываем уведомление
         tg.showPopup({
             title: 'Скопировано!',
             message: `Username ${managerText} скопирован в буфер обмена`,
             buttons: [{type: 'ok'}]
         });
         
-        // Отправляем в бот
         const data = {
             action: 'copy_manager',
             manager: managerText,
             userId: user?.id
         };
         tg.sendData(JSON.stringify(data));
-    }).catch(() => {
-        tg.HapticFeedback.notificationOccurred('error');
-        
-        // Если не получается скопировать, показываем алерт
-        tg.showPopup({
-            title: 'Ошибка',
-            message: `Скопируйте вручную: ${managerText}`,
-            buttons: [{type: 'ok'}]
-        });
     });
 });
 
@@ -147,34 +122,6 @@ copyManager.addEventListener('click', function() {
 replenishModal.addEventListener('click', function(e) {
     if (e.target === replenishModal) {
         replenishModal.style.display = 'none';
-    }
-});
-
-// Обработка клика по кошельку
-document.getElementById('walletButton').addEventListener('click', function() {
-    tg.HapticFeedback.impactOccurred('light');
-    
-    tg.showPopup({
-        title: 'Кошелек',
-        message: 'Ваш баланс: 0 OTON\nПополните кошелек через My Gift!',
-        buttons: [
-            {id: 'go_to_gift', text: 'Перейти к подаркам'},
-            {type: 'cancel', text: 'Закрыть'}
-        ]
-    });
-    
-    const data = {
-        action: 'wallet_click',
-        userId: user?.id
-    };
-    tg.sendData(JSON.stringify(data));
-});
-
-// Обработка закрытия попапов
-tg.onEvent('popupClosed', function(event) {
-    if (event.button_id === 'go_to_gift') {
-        // Переходим на страницу подарков
-        giftNavButton.click();
     }
 });
 
@@ -194,12 +141,6 @@ document.querySelectorAll('.tab').forEach(tab => {
             userId: user?.id
         };
         tg.sendData(JSON.stringify(data));
-        
-        tg.showPopup({
-            title: tabName,
-            message: `Раздел "${tabName}" откроется в следующем обновлении!`,
-            buttons: [{type: 'ok'}]
-        });
     });
 });
 
@@ -230,12 +171,23 @@ document.querySelectorAll('.menu-item').forEach(item => {
             userId: user?.id
         };
         tg.sendData(JSON.stringify(data));
+    });
+});
+
+// Обработка Back, Store, Season
+document.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const action = this.dataset.action;
+        const btnName = this.querySelector('span').textContent;
         
-        tg.showPopup({
-            title: itemName,
-            message: `Раздел "${itemName}" откроется в следующем обновлении!`,
-            buttons: [{type: 'ok'}]
-        });
+        tg.HapticFeedback.impactOccurred('medium');
+        
+        const data = {
+            action: action,
+            button: btnName,
+            userId: user?.id
+        };
+        tg.sendData(JSON.stringify(data));
     });
 });
 
@@ -254,40 +206,8 @@ document.querySelectorAll('.nav-item[data-nav="nft"], .nav-item[data-nav="profil
             userId: user?.id
         };
         tg.sendData(JSON.stringify(data));
-        
-        if (navAction === 'nft') {
-            tg.showPopup({
-                title: 'NFT',
-                message: 'Ваши NFT коллекции появятся здесь',
-                buttons: [{type: 'ok'}]
-            });
-        } else if (navAction === 'profile') {
-            const userInfo = user ? 
-                `${user.first_name} ${user.last_name || ''}\nID: ${user.id}\nБаланс: 0 OTON` : 
-                'Информация загружается...';
-            
-            tg.showPopup({
-                title: 'Profile',
-                message: userInfo,
-                buttons: [{type: 'ok'}]
-            });
-        }
     });
 });
-
-// Функция обновления баланса
-function updateBalance(amount) {
-    document.querySelectorAll('.wallet-balance').forEach(el => {
-        el.textContent = amount;
-    });
-    
-    const data = {
-        action: 'update_balance',
-        balance: amount,
-        userId: user?.id
-    };
-    tg.sendData(JSON.stringify(data));
-}
 
 // Отправка данных при закрытии
 window.addEventListener('beforeunload', function() {
@@ -299,4 +219,4 @@ window.addEventListener('beforeunload', function() {
     tg.sendData(JSON.stringify(data));
 });
 
-console.log('Mini App загружен с страницей My Gift');
+console.log('Mini App загружен с дизайном как было раньше');
