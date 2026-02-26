@@ -3,145 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xRocket - OTON</title>
+    <title>xRocket - Portals Clone</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="app">
-        <!-- Шапка с балансом -->
+        <!-- Шапка как в Portals -->
         <div class="header">
-            <div class="balance-top">
-                <span class="balance-amount">0</span>
-                <span class="balance-currency">OTON</span>
+            <div class="balance-section">
+                <span class="balance">0</span>
+                <span class="currency">OTON</span>
             </div>
-            <div class="collections-count">3 collections</div>
-            <div class="commission">Commission 0%</div>
+            <div class="stats">
+                <span class="collections">3 collections</span>
+                <span class="commission">Commission 0%</span>
+            </div>
         </div>
 
-        <!-- Основное меню -->
-        <div id="mainMenu" class="main-menu">
-            <!-- Вкладки -->
-            <div class="tabs">
-                <button class="tab active">All items</button>
-                <button class="tab">Collections</button>
-                <button class="tab">Bundles</button>
-            </div>
+        <!-- Вкладки -->
+        <div class="tabs">
+            <button class="tab active">All items</button>
+            <button class="tab">Collections</button>
+            <button class="tab">Bundles</button>
+        </div>
 
-            <!-- Поиск -->
-            <div class="quick-find">
-                <i class="fas fa-search"></i>
-                <span>Quick find</span>
-            </div>
+        <!-- Quick find -->
+        <div class="quick-find">
+            <i class="fas fa-search"></i>
+            <span>Quick find</span>
+        </div>
 
-            <!-- Collection и Model -->
-            <div class="items-grid">
-                <div class="menu-item collection-item" data-action="collection">
-                    <div class="item-icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
+        <!-- Основные кнопки -->
+        <div class="main-buttons">
+            <div class="button-row">
+                <div class="main-btn" data-action="collection">
+                    <i class="fas fa-layer-group"></i>
                     <span>Collection</span>
                 </div>
-
-                <div class="menu-item model-item" data-action="model">
-                    <div class="item-icon">
-                        <i class="fas fa-cube"></i>
-                    </div>
+                <div class="main-btn" data-action="model">
+                    <i class="fas fa-cube"></i>
                     <span>Model</span>
                 </div>
             </div>
 
-            <!-- Нижние кнопки Back, Store, Season -->
-            <div class="bottom-actions">
-                <div class="action-btn back-item" data-action="back">
+            <div class="button-row">
+                <div class="main-btn" data-action="back">
                     <i class="fas fa-arrow-left"></i>
                     <span>Back</span>
                 </div>
-                <div class="action-btn store-item" data-action="store">
+                <div class="main-btn" data-action="store">
                     <i class="fas fa-store"></i>
                     <span>Store</span>
                 </div>
-                <div class="action-btn season-item" data-action="season">
+                <div class="main-btn" data-action="season">
                     <i class="fas fa-calendar"></i>
                     <span>Season</span>
                 </div>
             </div>
-
-            <!-- Нижняя навигация NFT, My gift, Profile -->
-            <nav class="bottom-nav">
-                <div class="nav-item" data-nav="nft">
-                    <i class="fas fa-image"></i>
-                    <span>NFT</span>
-                </div>
-                <div class="nav-item" data-nav="gift" id="giftNavButton">
-                    <i class="fas fa-gift"></i>
-                    <span>My gift</span>
-                </div>
-                <div class="nav-item" data-nav="profile">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </div>
-            </nav>
         </div>
 
-        <!-- Страница My Gift (скрыта по умолчанию) -->
-        <div id="giftPage" class="gift-page" style="display: none;">
-            <div class="gift-header">
-                <button class="back-button" id="backFromGift">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <h2>My Gift</h2>
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <div class="nav-item" data-nav="nft">
+                <i class="fas fa-image"></i>
+                <span>NFT</span>
             </div>
-
-            <div class="gift-content">
-                <div class="nft-zero">
-                    <div class="nft-zero-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <div class="nft-zero-text">0 NFT</div>
-                    <div class="nft-zero-subtext">У вас пока нет подарков</div>
-                </div>
-
-                <div class="gift-actions">
-                    <button class="gift-action-btn replenish-btn" id="replenishBtn">
-                        <i class="fas fa-plus-circle"></i>
-                        Пополнить
-                    </button>
-                    <button class="gift-action-btn withdraw-btn" id="withdrawBtn">
-                        <i class="fas fa-minus-circle"></i>
-                        Вывести
-                    </button>
-                </div>
+            <div class="nav-item" data-nav="gift">
+                <i class="fas fa-gift"></i>
+                <span>My gift</span>
             </div>
-        </div>
-
-        <!-- Модальное окно для пополнения -->
-        <div id="replenishModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Пополнение</h3>
-                    <button class="close-modal" id="closeModal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="manager-info">
-                        <i class="fas fa-user-tie"></i>
-                        <p>Передайте подарок нашему менеджеру:</p>
-                        <div class="manager-username" id="managerUsername">
-                            @ManagerKupiKod
-                        </div>
-                        <button class="copy-btn" id="copyManager">
-                            <i class="fas fa-copy"></i> Копировать
-                        </button>
-                    </div>
-                    <div class="modal-note">
-                        После отправки подарка, напишите менеджеру для подтверждения
-                    </div>
-                </div>
+            <div class="nav-item" data-nav="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
             </div>
-        </div>
+        </nav>
     </div>
 
     <script src="script.js"></script>
