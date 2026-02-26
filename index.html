@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="app">
-        <!-- Шапка как в Portals -->
-        <div class="header">
+        <!-- Шапка как в Portals (видна только в главном меню) -->
+        <div id="mainHeader" class="header">
             <div class="balance-section">
                 <span class="balance">0</span>
                 <span class="currency">OTON</span>
@@ -22,44 +22,186 @@
             </div>
         </div>
 
-        <!-- Вкладки -->
-        <div class="tabs">
-            <button class="tab active">All items</button>
-            <button class="tab">Collections</button>
-            <button class="tab">Bundles</button>
-        </div>
-
-        <!-- Quick find -->
-        <div class="quick-find">
-            <i class="fas fa-search"></i>
-            <span>Quick find</span>
-        </div>
-
-        <!-- Основные кнопки -->
-        <div class="main-buttons">
-            <div class="button-row">
-                <div class="main-btn" data-action="collection">
-                    <i class="fas fa-layer-group"></i>
-                    <span>Collection</span>
-                </div>
-                <div class="main-btn" data-action="model">
-                    <i class="fas fa-cube"></i>
-                    <span>Model</span>
-                </div>
+        <!-- Главное меню -->
+        <div id="mainMenu">
+            <!-- Вкладки -->
+            <div class="tabs">
+                <button class="tab active">All items</button>
+                <button class="tab">Collections</button>
+                <button class="tab">Bundles</button>
             </div>
 
-            <div class="button-row">
-                <div class="main-btn" data-action="back">
+            <!-- Quick find -->
+            <div class="quick-find">
+                <i class="fas fa-search"></i>
+                <span>Quick find</span>
+            </div>
+
+            <!-- Основные кнопки -->
+            <div class="main-buttons">
+                <div class="button-row">
+                    <div class="main-btn" data-action="collection">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Collection</span>
+                    </div>
+                    <div class="main-btn" data-action="model">
+                        <i class="fas fa-cube"></i>
+                        <span>Model</span>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <div class="main-btn" data-action="back">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </div>
+                    <div class="main-btn" data-action="store">
+                        <i class="fas fa-store"></i>
+                        <span>Store</span>
+                    </div>
+                    <div class="main-btn" data-action="season">
+                        <i class="fas fa-calendar"></i>
+                        <span>Season</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница My Gift (без шапки) -->
+        <div id="giftPage" class="page" style="display: none;">
+            <div class="page-header">
+                <button class="back-button" id="backFromGift">
                     <i class="fas fa-arrow-left"></i>
-                    <span>Back</span>
+                </button>
+                <h2>My Gift</h2>
+            </div>
+
+            <div class="gift-content">
+                <div class="nft-zero">
+                    <div class="nft-zero-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="nft-zero-text">0 NFT</div>
+                    <div class="nft-zero-subtext">У вас пока нет подарков</div>
                 </div>
-                <div class="main-btn" data-action="store">
-                    <i class="fas fa-store"></i>
-                    <span>Store</span>
+
+                <div class="gift-actions">
+                    <button class="gift-action-btn replenish-btn" id="replenishBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        Пополнить
+                    </button>
+                    <button class="gift-action-btn withdraw-btn" id="withdrawBtn">
+                        <i class="fas fa-minus-circle"></i>
+                        Вывести
+                    </button>
                 </div>
-                <div class="main-btn" data-action="season">
-                    <i class="fas fa-calendar"></i>
-                    <span>Season</span>
+            </div>
+        </div>
+
+        <!-- Страница Profile -->
+        <div id="profilePage" class="page" style="display: none;">
+            <div class="page-header">
+                <button class="back-button" id="backFromProfile">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Profile</h2>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-avatar">
+                    <img id="userAvatar" src="https://via.placeholder.com/80" alt="avatar">
+                </div>
+                
+                <div class="profile-name" id="userName">Загрузка...</div>
+                <div class="profile-username" id="userUsername">@username</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="nftCount">0</div>
+                        <div class="stat-label">NFT</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="collectionsCount">3</div>
+                        <div class="stat-label">Коллекции</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="giftsCount">0</div>
+                        <div class="stat-label">Подарки</div>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">Дата регистрации:</span>
+                        <span class="info-value" id="regDate">12.03.2024</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Всего NFT получено:</span>
+                        <span class="info-value" id="totalNFT">0</span>
+                    </div>
+                </div>
+
+                <div class="transactions-section">
+                    <h3>Последние транзакции</h3>
+                    <div class="transactions-list" id="transactionsList">
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <div class="transaction-title">Получено NFT</div>
+                                <div class="transaction-date">Сегодня, 14:30</div>
+                            </div>
+                            <div class="transaction-amount">+1 NFT</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <div class="transaction-title">Подарок от @friend</div>
+                                <div class="transaction-date">Вчера, 18:20</div>
+                            </div>
+                            <div class="transaction-amount">+1 Gift</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <div class="transaction-title">Пополнение</div>
+                                <div class="transaction-date">12.03.2024</div>
+                            </div>
+                            <div class="transaction-amount">+100 OTON</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для пополнения -->
+        <div id="replenishModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Пополнение</h3>
+                    <button class="close-modal" id="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="manager-info">
+                        <i class="fas fa-user-tie"></i>
+                        <p>Передайте подарок нашему менеджеру:</p>
+                        <div class="manager-username" id="managerUsername">
+                            @ManagerKupiKod
+                        </div>
+                        <button class="manager-chat-btn" id="chatWithManager">
+                            <i class="fas fa-comment"></i> Написать менеджеру
+                        </button>
+                    </div>
+                    <div class="modal-note">
+                        После отправки подарка, нажмите "Написать менеджеру" для подтверждения
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,11 +212,11 @@
                 <i class="fas fa-image"></i>
                 <span>NFT</span>
             </div>
-            <div class="nav-item" data-nav="gift">
+            <div class="nav-item" data-nav="gift" id="giftNavButton">
                 <i class="fas fa-gift"></i>
                 <span>My gift</span>
             </div>
-            <div class="nav-item" data-nav="profile">
+            <div class="nav-item" data-nav="profile" id="profileNavButton">
                 <i class="fas fa-user"></i>
                 <span>Profile</span>
             </div>
