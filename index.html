@@ -10,14 +10,15 @@
 </head>
 <body>
     <div class="app">
-        <!-- Шапка с балансом -->
-        <div class="header">
-            <div class="balance-top">
-                <span class="balance-amount">0</span>
-                <span class="balance-currency">OTON</span>
+        <!-- Маленький кошелек в правом верхнем углу -->
+        <div class="wallet-corner">
+            <div class="wallet-icon">
+                <i class="fas fa-wallet"></i>
             </div>
-            <div class="collections-count">3 collections</div>
-            <div class="commission">Commission 0%</div>
+            <div class="wallet-info">
+                <span class="wallet-balance">0</span>
+                <span class="wallet-currency">OTON</span>
+            </div>
         </div>
 
         <!-- Основное меню -->
@@ -35,7 +36,7 @@
                 <span>Quick find</span>
             </div>
 
-            <!-- Сетка элементов (верхняя) -->
+            <!-- Collection и Model -->
             <div class="items-grid">
                 <!-- Collection -->
                 <div class="menu-item collection-item" data-action="collection">
@@ -54,7 +55,7 @@
                 </div>
             </div>
 
-            <!-- Нижняя навигация с NFT, My gift, Profile -->
+            <!-- Нижняя навигация (только нужные кнопки) -->
             <nav class="bottom-nav">
                 <div class="nav-item" data-nav="nft">
                     <i class="fas fa-image"></i>
@@ -69,27 +70,6 @@
                     <span>Profile</span>
                 </div>
             </nav>
-
-            <!-- Дополнительные кнопки (Back, Store, Season) -->
-            <div class="bottom-actions">
-                <!-- Back -->
-                <div class="action-btn back-item" data-action="back">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back</span>
-                </div>
-
-                <!-- Store -->
-                <div class="action-btn store-item" data-action="store">
-                    <i class="fas fa-store"></i>
-                    <span>Store</span>
-                </div>
-
-                <!-- Season -->
-                <div class="action-btn season-item" data-action="season">
-                    <i class="fas fa-calendar"></i>
-                    <span>Season</span>
-                </div>
-            </div>
         </div>
     </div>
 
