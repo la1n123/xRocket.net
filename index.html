@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portals Clone - Крипто кошелек</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Шапка -->
+        <div class="header">
+            <div class="user-info">
+                <img src="https://via.placeholder.com/40" alt="avatar" id="userAvatar">
+                <div>
+                    <h3 id="userName">Загрузка...</h3>
+                    <p id="userHandle">@username</p>
+                </div>
+            </div>
+            <div class="settings-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+        </div>
+
+        <!-- Баланс -->
+        <div class="balance-card">
+            <div class="balance-header">
+                <span>Общий баланс</span>
+                <i class="fas fa-eye" id="toggleBalance"></i>
+            </div>
+            <div class="total-balance" id="totalBalance">$0.00</div>
+            <div class="wallet-address" id="walletAddress">
+                <span>Подключите кошелек</span>
+                <i class="fas fa-copy" id="copyAddress"></i>
+            </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="action-grid">
+            <div class="action-btn" onclick="showBuy()">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Купить</span>
+            </div>
+            <div class="action-btn" onclick="showSend()">
+                <i class="fas fa-paper-plane"></i>
+                <span>Отправить</span>
+            </div>
+            <div class="action-btn" onclick="showReceive()">
+                <i class="fas fa-qrcode"></i>
+                <span>Получить</span>
+            </div>
+            <div class="action-btn" onclick="showSwap()">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Обмен</span>
+            </div>
+        </div>
+
+        <!-- Список токенов -->
+        <div class="tokens-section">
+            <div class="section-header">
+                <h3>Ваши токены</h3>
+                <span class="view-all">Все ></span>
+            </div>
+            <div class="tokens-list" id="tokensList">
+                <!-- Токены будут загружаться сюда -->
+                <div class="token-item">
+                    <div class="token-icon" style="background: #627EEA;">Ξ</div>
+                    <div class="token-info">
+                        <div class="token-name">Ethereum</div>
+                        <div class="token-symbol">ETH</div>
+                    </div>
+                    <div class="token-amount">
+                        <div class="token-value">0.5 ETH</div>
+                        <div class="token-usd">$1,500.00</div>
+                    </div>
+                </div>
+                <div class="token-item">
+                    <div class="token-icon" style="background: #26A17E;">₮</div>
+                    <div class="token-info">
+                        <div class="token-name">Tether</div>
+                        <div class="token-symbol">USDT</div>
+                    </div>
+                    <div class="token-amount">
+                        <div class="token-value">1,000 USDT</div>
+                        <div class="token-usd">$1,000.00</div>
+                    </div>
+                </div>
+                <div class="token-item">
+                    <div class="token-icon" style="background: #F3BA2F;">BNB</div>
+                    <div class="token-info">
+                        <div class="token-name">Binance Coin</div>
+                        <div class="token-symbol">BNB</div>
+                    </div>
+                    <div class="token-amount">
+                        <div class="token-value">2.5 BNB</div>
+                        <div class="token-usd">$750.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NFT секция -->
+        <div class="nft-section">
+            <div class="section-header">
+                <h3>Коллекции NFT</h3>
+                <span class="view-all">Все ></span>
+            </div>
+            <div class="nft-grid" id="nftGrid">
+                <div class="nft-item">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span class="nft-count">#123</span>
+                    </div>
+                    <div class="nft-name">CryptoPunk</div>
+                    <div class="nft-price">50 ETH</div>
+                </div>
+                <div class="nft-item">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <span class="nft-count">#456</span>
+                    </div>
+                    <div class="nft-name">Bored Ape</div>
+                    <div class="nft-price">30 ETH</div>
+                </div>
+                <div class="nft-item">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span class="nft-count">#789</span>
+                    </div>
+                    <div class="nft-name">Art Block</div>
+                    <div class="nft-price">15 ETH</div>
+                </div>
+                <div class="nft-item">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <span class="nft-count">#101</span>
+                    </div>
+                    <div class="nft-name">Azuki</div>
+                    <div class="nft-price">25 ETH</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <i class="fas fa-wallet"></i>
+                <span>Кошелек</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Рынок</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-images"></i>
+                <span>NFT</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </div>
+        </nav>
+
+        <!-- Модальные окна -->
+        <div class="modal" id="sendModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Отправить</h3>
+                    <i class="fas fa-times close-modal"></i>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Адрес получателя</label>
+                        <input type="text" placeholder="0x..." id="sendAddress">
+                    </div>
+                    <div class="form-group">
+                        <label>Сумма</label>
+                        <input type="number" placeholder="0.0" id="sendAmount">
+                    </div>
+                    <div class="form-group">
+                        <label>Токен</label>
+                        <select id="sendToken">
+                            <option value="ETH">ETH</option>
+                            <option value="USDT">USDT</option>
+                            <option value="BNB">BNB</option>
+                        </select>
+                    </div>
+                    <button class="modal-btn" onclick="confirmSend()">Отправить</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="receiveModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Получить</h3>
+                    <i class="fas fa-times close-modal"></i>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-code">
+                        <i class="fas fa-qrcode" style="font-size: 150px; color: #333;"></i>
+                    </div>
+                    <div class="address-display" id="receiveAddress">
+                        0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+                    </div>
+                    <button class="modal-btn" onclick="copyReceiveAddress()">
+                        <i class="fas fa-copy"></i> Копировать адрес
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
