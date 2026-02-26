@@ -1,240 +1,183 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
+// Инициализация Telegram Web App
+const tg = window.Telegram.WebApp;
+tg.expand();
+tg.enableClosingConfirmation();
 
-body {
-    background: #0a0a0a;
-    color: #ffffff;
-}
+// Данные пользователя
+const user = tg.initDataUnsafe?.user;
 
-.app {
-    max-width: 480px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background: #0a0a0a;
-    padding: 20px;
-    position: relative;
-}
-
-/* Маленький кошелек в правом верхнем углу */
-.wallet-corner {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    padding: 8px 15px;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 100;
-}
-
-.wallet-corner:hover {
-    transform: translateY(-2px);
-    border-color: #00ff88;
-    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
-}
-
-.wallet-icon {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #00ff88;
-    font-size: 16px;
-}
-
-.wallet-info {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-}
-
-.wallet-balance {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.wallet-currency {
-    font-size: 12px;
-    color: #808080;
-}
-
-/* Основное меню */
-.main-menu {
-    margin-top: 80px; /* Отступ чтобы не перекрывалось с кошельком */
-}
-
-/* Вкладки */
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    background: #1a1a1a;
-    padding: 5px;
-    border-radius: 30px;
-}
-
-.tab {
-    flex: 1;
-    padding: 12px;
-    background: transparent;
-    border: none;
-    color: #808080;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.tab.active {
-    background: #00ff88;
-    color: #000000;
-}
-
-/* Быстрый поиск */
-.quick-find {
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #808080;
-    border: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.quick-find:hover {
-    background: #2a2a2a;
-    border-color: #00ff88;
-}
-
-.quick-find i {
-    color: #00ff88;
-}
-
-/* Сетка для Collection и Model */
-.items-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.menu-item {
-    background: #1a1a1a;
-    border-radius: 15px;
-    padding: 25px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.menu-item:hover {
-    transform: translateY(-2px);
-    border-color: #00ff88;
-    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
-}
-
-.item-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-}
-
-.collection-item .item-icon {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-}
-
-.model-item .item-icon {
-    background: rgba(0, 255, 136, 0.2);
-    color: #00ff88;
-}
-
-.menu-item span {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-/* Нижняя навигация (только NFT, My gift, Profile) */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 30px;
-    margin-top: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    color: #808080;
-    transition: all 0.3s;
-    flex: 1;
-}
-
-.nav-item:hover {
-    color: #00ff88;
-    transform: translateY(-2px);
-}
-
-.nav-item i {
-    font-size: 24px;
-}
-
-.nav-item span {
-    font-size: 13px;
-    font-weight: 500;
-}
-
-/* Анимации */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.menu-item:active, .nav-item:active, .wallet-corner:active {
-    animation: pulse 0.2s;
-}
-
-/* Адаптация под темную тему Telegram */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: #0a0a0a;
+// Загрузка данных
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Mini App загружен с кошельком в углу');
+    
+    // Если есть данные пользователя, можно их отобразить
+    if (user) {
+        console.log('Пользователь:', user);
     }
+});
+
+// Обработка клика по кошельку
+document.querySelector('.wallet-corner').addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('light');
+    
+    tg.showPopup({
+        title: 'Кошелек',
+        message: 'Ваш баланс: 0 OTON\nПополните кошелек в сезоне!',
+        buttons: [
+            {id: 'replenish', text: 'Пополнить'},
+            {type: 'cancel', text: 'Закрыть'}
+        ]
+    });
+    
+    // Отправляем данные в бот
+    const data = {
+        action: 'wallet_click',
+        userId: user?.id
+    };
+    tg.sendData(JSON.stringify(data));
+});
+
+// Обработка вкладок (All items, Collections, Bundles)
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        tg.HapticFeedback.impactOccurred('light');
+        
+        const tabName = this.textContent;
+        console.log(`Выбрана вкладка: ${tabName}`);
+        
+        const data = {
+            action: 'tab_click',
+            tab: tabName,
+            userId: user?.id
+        };
+        tg.sendData(JSON.stringify(data));
+        
+        tg.showPopup({
+            title: tabName,
+            message: `Раздел "${tabName}" откроется в следующем обновлении!`,
+            buttons: [{type: 'ok'}]
+        });
+    });
+});
+
+// Обработка поиска
+document.querySelector('.quick-find').addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('medium');
+    tg.showPopup({
+        title: 'Quick Find',
+        message: 'Введите название предмета или коллекции',
+        buttons: [
+            {id: 'search', text: 'Поиск'},
+            {type: 'cancel', text: 'Отмена'}
+        ]
+    });
+});
+
+// Обработка Collection и Model
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const action = this.dataset.action;
+        const itemName = this.querySelector('span').textContent;
+        
+        tg.HapticFeedback.impactOccurred('medium');
+        
+        const data = {
+            action: action,
+            item: itemName,
+            userId: user?.id
+        };
+        tg.sendData(JSON.stringify(data));
+        
+        tg.showPopup({
+            title: itemName,
+            message: `Раздел "${itemName}" откроется в следующем обновлении!`,
+            buttons: [{type: 'ok'}]
+        });
+    });
+});
+
+// Обработка нижней навигации (NFT, My gift, Profile)
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const navAction = this.dataset.nav;
+        const navName = this.querySelector('span').textContent;
+        
+        tg.HapticFeedback.selectionChanged();
+        
+        const data = {
+            action: 'nav_click',
+            section: navAction,
+            name: navName,
+            userId: user?.id
+        };
+        tg.sendData(JSON.stringify(data));
+        
+        switch(navAction) {
+            case 'nft':
+                tg.showPopup({
+                    title: 'NFT',
+                    message: 'Ваши NFT коллекции появятся здесь',
+                    buttons: [{type: 'ok'}]
+                });
+                break;
+                
+            case 'gift':
+                tg.showPopup({
+                    title: 'My Gift',
+                    message: 'У вас 0 подарков. Получите подарки в сезоне!',
+                    buttons: [{type: 'ok'}]
+                });
+                break;
+                
+            case 'profile':
+                const userInfo = user ? 
+                    `${user.first_name} ${user.last_name || ''}\nID: ${user.id}\nБаланс: 0 OTON` : 
+                    'Информация загружается...';
+                
+                tg.showPopup({
+                    title: 'Profile',
+                    message: userInfo,
+                    buttons: [{type: 'ok'}]
+                });
+                break;
+        }
+    });
+});
+
+// Функция обновления баланса
+function updateBalance(amount) {
+    document.querySelector('.wallet-balance').textContent = amount;
+    
+    const data = {
+        action: 'update_balance',
+        balance: amount,
+        userId: user?.id
+    };
+    tg.sendData(JSON.stringify(data));
 }
 
-/* Адаптация под Telegram */
-.tg-theme {
-    background: var(--tg-theme-bg-color, #0a0a0a);
-    color: var(--tg-theme-text-color, #ffffff);
-}
+// Обработка закрытия попапов
+tg.onEvent('popupClosed', function(event) {
+    if (event.button_id === 'replenish') {
+        tg.showPopup({
+            title: 'Пополнение',
+            message: 'Функция пополнения скоро появится!',
+            buttons: [{type: 'ok'}]
+        });
+    }
+});
+
+// Отправка данных при закрытии
+window.addEventListener('beforeunload', function() {
+    const data = {
+        action: 'close_app',
+        userId: user?.id,
+        timestamp: new Date().toISOString()
+    };
+    tg.sendData(JSON.stringify(data));
+});
+
+console.log('Mini App загружен: только нужные кнопки + кошелек в углу');
