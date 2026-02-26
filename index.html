@@ -10,18 +10,17 @@
 </head>
 <body>
     <div class="app">
-        <!-- Маленький кошелек в правом верхнем углу -->
-        <div class="wallet-corner" id="walletButton">
-            <div class="wallet-icon">
-                <i class="fas fa-wallet"></i>
+        <!-- Шапка с балансом -->
+        <div class="header">
+            <div class="balance-top">
+                <span class="balance-amount">0</span>
+                <span class="balance-currency">OTON</span>
             </div>
-            <div class="wallet-info">
-                <span class="wallet-balance">0</span>
-                <span class="wallet-currency">OTON</span>
-            </div>
+            <div class="collections-count">3 collections</div>
+            <div class="commission">Commission 0%</div>
         </div>
 
-        <!-- Основное меню (видно по умолчанию) -->
+        <!-- Основное меню -->
         <div id="mainMenu" class="main-menu">
             <!-- Вкладки -->
             <div class="tabs">
@@ -53,13 +52,29 @@
                 </div>
             </div>
 
-            <!-- Нижняя навигация -->
+            <!-- Нижние кнопки Back, Store, Season -->
+            <div class="bottom-actions">
+                <div class="action-btn back-item" data-action="back">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </div>
+                <div class="action-btn store-item" data-action="store">
+                    <i class="fas fa-store"></i>
+                    <span>Store</span>
+                </div>
+                <div class="action-btn season-item" data-action="season">
+                    <i class="fas fa-calendar"></i>
+                    <span>Season</span>
+                </div>
+            </div>
+
+            <!-- Нижняя навигация NFT, My gift, Profile -->
             <nav class="bottom-nav">
                 <div class="nav-item" data-nav="nft">
                     <i class="fas fa-image"></i>
                     <span>NFT</span>
                 </div>
-                <div class="nav-item active" data-nav="gift" id="giftNavButton">
+                <div class="nav-item" data-nav="gift" id="giftNavButton">
                     <i class="fas fa-gift"></i>
                     <span>My gift</span>
                 </div>
