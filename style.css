@@ -1,240 +1,278 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-body {
-    background: #0a0a0a;
-    color: #ffffff;
-}
-
-.app {
-    max-width: 480px;
-    margin: 0 auto;
+/* Gift Page Styles */
+.gift-page {
+    padding: 20px;
     min-height: 100vh;
     background: #0a0a0a;
-    padding: 20px;
-    position: relative;
 }
 
-/* Маленький кошелек в правом верхнем углу */
-.wallet-corner {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+.gift-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    padding: 8px 15px;
-    border-radius: 30px;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-top: 10px;
+}
+
+.back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #1a1a1a;
     border: 1px solid rgba(255,255,255,0.1);
+    color: #00ff88;
+    font-size: 20px;
     cursor: pointer;
-    transition: all 0.3s;
-    z-index: 100;
-}
-
-.wallet-corner:hover {
-    transform: translateY(-2px);
-    border-color: #00ff88;
-    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
-}
-
-.wallet-icon {
-    width: 24px;
-    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #00ff88;
-    font-size: 16px;
-}
-
-.wallet-info {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-}
-
-.wallet-balance {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.wallet-currency {
-    font-size: 12px;
-    color: #808080;
-}
-
-/* Основное меню */
-.main-menu {
-    margin-top: 80px; /* Отступ чтобы не перекрывалось с кошельком */
-}
-
-/* Вкладки */
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    background: #1a1a1a;
-    padding: 5px;
-    border-radius: 30px;
-}
-
-.tab {
-    flex: 1;
-    padding: 12px;
-    background: transparent;
-    border: none;
-    color: #808080;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 25px;
-    cursor: pointer;
     transition: all 0.3s;
 }
 
-.tab.active {
-    background: #00ff88;
+.back-button:hover {
+    background: #2a2a2a;
+    border-color: #00ff88;
+    transform: translateX(-2px);
+}
+
+.gift-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gift-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.nft-zero {
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.nft-zero-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 2px solid rgba(0,255,136,0.3);
+}
+
+.nft-zero-icon i {
+    font-size: 50px;
+    color: #00ff88;
+}
+
+.nft-zero-text {
+    font-size: 48px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.nft-zero-subtext {
+    font-size: 16px;
+    color: #808080;
+}
+
+.gift-actions {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.gift-action-btn {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+.gift-action-btn i {
+    font-size: 20px;
+}
+
+.replenish-btn {
+    background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
     color: #000000;
 }
 
-/* Быстрый поиск */
-.quick-find {
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #808080;
-    border: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.quick-find:hover {
-    background: #2a2a2a;
-    border-color: #00ff88;
-}
-
-.quick-find i {
-    color: #00ff88;
-}
-
-/* Сетка для Collection и Model */
-.items-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.menu-item {
-    background: #1a1a1a;
-    border-radius: 15px;
-    padding: 25px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.menu-item:hover {
+.replenish-btn:hover {
     transform: translateY(-2px);
-    border-color: #00ff88;
-    box-shadow: 0 5px 15px rgba(0,255,136,0.2);
+    box-shadow: 0 10px 20px rgba(0,255,136,0.3);
 }
 
-.item-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
+.withdraw-btn {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.withdraw-btn:hover {
+    transform: translateY(-2px);
+    border-color: #ff4b4b;
+    box-shadow: 0 10px 20px rgba(255,75,75,0.2);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
-.collection-item .item-icon {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-}
-
-.model-item .item-icon {
-    background: rgba(0, 255, 136, 0.2);
-    color: #00ff88;
-}
-
-.menu-item span {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-/* Нижняя навигация (только NFT, My gift, Profile) */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
+.modal-content {
     background: #1a1a1a;
-    padding: 20px;
     border-radius: 30px;
-    margin-top: 20px;
+    width: 90%;
+    max-width: 400px;
     border: 1px solid rgba(255,255,255,0.1);
+    animation: slideUp 0.3s ease;
 }
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    color: #808080;
-    transition: all 0.3s;
-    flex: 1;
-}
-
-.nav-item:hover {
-    color: #00ff88;
-    transform: translateY(-2px);
-}
-
-.nav-item i {
-    font-size: 24px;
-}
-
-.nav-item span {
-    font-size: 13px;
-    font-weight: 500;
-}
-
-/* Анимации */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.menu-item:active, .nav-item:active, .wallet-corner:active {
-    animation: pulse 0.2s;
-}
-
-/* Адаптация под темную тему Telegram */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: #0a0a0a;
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
-/* Адаптация под Telegram */
-.tg-theme {
-    background: var(--tg-theme-bg-color, #0a0a0a);
-    color: var(--tg-theme-text-color, #ffffff);
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: #00ff88;
+}
+
+.close-modal {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background: transparent;
+    border: none;
+    color: #808080;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-modal:hover {
+    color: #ff4b4b;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 30px 20px;
+}
+
+.manager-info {
+    text-align: center;
+}
+
+.manager-info i {
+    font-size: 50px;
+    color: #00ff88;
+    margin-bottom: 15px;
+}
+
+.manager-info p {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.manager-username {
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #00ff88;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0,255,136,0.3);
+    word-break: break-all;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+    color: #000000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,255,136,0.3);
+}
+
+.modal-note {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255,75,75,0.1);
+    border-radius: 10px;
+    color: #ff4b4b;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid rgba(255,75,75,0.3);
+}
+
+/* Адаптация для навигации */
+.nav-item.active {
+    color: #00ff88;
+}
+
+.nav-item[data-nav="gift"].active {
+    color: #00ff88;
 }
