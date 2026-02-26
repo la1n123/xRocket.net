@@ -6,30 +6,163 @@ tg.enableClosingConfirmation();
 // Данные пользователя
 const user = tg.initDataUnsafe?.user;
 
+// Элементы страницы
+const mainMenu = document.getElementById('mainMenu');
+const giftPage = document.getElementById('giftPage');
+const giftNavButton = document.getElementById('giftNavButton');
+const backFromGift = document.getElementById('backFromGift');
+const replenishBtn = document.getElementById('replenishBtn');
+const withdrawBtn = document.getElementById('withdrawBtn');
+const replenishModal = document.getElementById('replenishModal');
+const closeModal = document.getElementById('closeModal');
+const copyManager = document.getElementById('copyManager');
+const managerUsername = document.getElementById('managerUsername');
+
 // Загрузка данных
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Mini App загружен с кошельком в углу');
+    console.log('Mini App загружен');
     
-    // Если есть данные пользователя, можно их отобразить
     if (user) {
         console.log('Пользователь:', user);
     }
 });
 
+// Переход на страницу My Gift
+giftNavButton.addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('medium');
+    
+    // Обновляем активное состояние навигации
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    giftNavButton.classList.add('active');
+    
+    // Показываем страницу подарков, скрываем главное меню
+    mainMenu.style.display = 'none';
+    giftPage.style.display = 'block';
+    
+    // Отправляем данные в бот
+    const data = {
+        action: 'open_gift_page',
+        userId: user?.id
+    };
+    tg.sendData(JSON.stringify(data));
+});
+
+// Возврат в главное меню
+backFromGift.addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('light');
+    
+    // Возвращаем активное состояние на кнопку подарков
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    giftNavButton.classList.add('active');
+    
+    // Скрываем страницу подарков, показываем главное меню
+    giftPage.style.display = 'none';
+    mainMenu.style.display = 'block';
+});
+
+// Обработка кнопки Пополнить
+replenishBtn.addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('heavy');
+    
+    // Показываем модальное окно
+    replenishModal.style.display = 'flex';
+    
+    // Отправляем в бот
+    const data = {
+        action: 'open_replenish',
+        userId: user?.id
+    };
+    tg.sendData(JSON.stringify(data));
+});
+
+// Обработка кнопки Вывести
+withdrawBtn.addEventListener('click', function() {
+    tg.HapticFeedback.impactOccurred('medium');
+    
+    tg.showPopup({
+        title: 'Вывод средств',
+        message: 'Функция вывода временно недоступна. Скоро откроется!',
+        buttons: [{type: 'ok'}]
+    });
+    
+    const data = {
+        action: 'withdraw_click',
+        userId: user?.id
+    };
+    tg.sendData(JSON.stringify(data));
+});
+
+// Закрытие модального окна
+closeModal.addEventListener('click', function() {
+    replenishModal.style.display = 'none';
+});
+
+// Копирование username менеджера
+copyManager.addEventListener('click', function() {
+    const managerText = managerUsername.textContent;
+    
+    // Копируем в буфер обмена
+    navigator.clipboard.writeText(managerText).then(() => {
+        tg.HapticFeedback.notificationOccurred('success');
+        
+        // Меняем текст кнопки временно
+        const originalText = copyManager.innerHTML;
+        copyManager.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+        
+        setTimeout(() => {
+            copyManager.innerHTML = originalText;
+        }, 2000);
+        
+        // Показываем уведомление
+        tg.showPopup({
+            title: 'Скопировано!',
+            message: `Username ${managerText} скопирован в буфер обмена`,
+            buttons: [{type: 'ok'}]
+        });
+        
+        // Отправляем в бот
+        const data = {
+            action: 'copy_manager',
+            manager: managerText,
+            userId: user?.id
+        };
+        tg.sendData(JSON.stringify(data));
+    }).catch(() => {
+        tg.HapticFeedback.notificationOccurred('error');
+        
+        // Если не получается скопировать, показываем алерт
+        tg.showPopup({
+            title: 'Ошибка',
+            message: `Скопируйте вручную: ${managerText}`,
+            buttons: [{type: 'ok'}]
+        });
+    });
+});
+
+// Закрытие модального окна при клике вне его
+replenishModal.addEventListener('click', function(e) {
+    if (e.target === replenishModal) {
+        replenishModal.style.display = 'none';
+    }
+});
+
 // Обработка клика по кошельку
-document.querySelector('.wallet-corner').addEventListener('click', function() {
+document.getElementById('walletButton').addEventListener('click', function() {
     tg.HapticFeedback.impactOccurred('light');
     
     tg.showPopup({
         title: 'Кошелек',
-        message: 'Ваш баланс: 0 OTON\nПополните кошелек в сезоне!',
+        message: 'Ваш баланс: 0 OTON\nПополните кошелек через My Gift!',
         buttons: [
-            {id: 'replenish', text: 'Пополнить'},
+            {id: 'go_to_gift', text: 'Перейти к подаркам'},
             {type: 'cancel', text: 'Закрыть'}
         ]
     });
     
-    // Отправляем данные в бот
     const data = {
         action: 'wallet_click',
         userId: user?.id
@@ -37,7 +170,15 @@ document.querySelector('.wallet-corner').addEventListener('click', function() {
     tg.sendData(JSON.stringify(data));
 });
 
-// Обработка вкладок (All items, Collections, Bundles)
+// Обработка закрытия попапов
+tg.onEvent('popupClosed', function(event) {
+    if (event.button_id === 'go_to_gift') {
+        // Переходим на страницу подарков
+        giftNavButton.click();
+    }
+});
+
+// Обработка вкладок
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', function() {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -46,7 +187,6 @@ document.querySelectorAll('.tab').forEach(tab => {
         tg.HapticFeedback.impactOccurred('light');
         
         const tabName = this.textContent;
-        console.log(`Выбрана вкладка: ${tabName}`);
         
         const data = {
             action: 'tab_click',
@@ -99,8 +239,8 @@ document.querySelectorAll('.menu-item').forEach(item => {
     });
 });
 
-// Обработка нижней навигации (NFT, My gift, Profile)
-document.querySelectorAll('.nav-item').forEach(item => {
+// Обработка NFT и Profile
+document.querySelectorAll('.nav-item[data-nav="nft"], .nav-item[data-nav="profile"]').forEach(item => {
     item.addEventListener('click', function() {
         const navAction = this.dataset.nav;
         const navName = this.querySelector('span').textContent;
@@ -115,41 +255,31 @@ document.querySelectorAll('.nav-item').forEach(item => {
         };
         tg.sendData(JSON.stringify(data));
         
-        switch(navAction) {
-            case 'nft':
-                tg.showPopup({
-                    title: 'NFT',
-                    message: 'Ваши NFT коллекции появятся здесь',
-                    buttons: [{type: 'ok'}]
-                });
-                break;
-                
-            case 'gift':
-                tg.showPopup({
-                    title: 'My Gift',
-                    message: 'У вас 0 подарков. Получите подарки в сезоне!',
-                    buttons: [{type: 'ok'}]
-                });
-                break;
-                
-            case 'profile':
-                const userInfo = user ? 
-                    `${user.first_name} ${user.last_name || ''}\nID: ${user.id}\nБаланс: 0 OTON` : 
-                    'Информация загружается...';
-                
-                tg.showPopup({
-                    title: 'Profile',
-                    message: userInfo,
-                    buttons: [{type: 'ok'}]
-                });
-                break;
+        if (navAction === 'nft') {
+            tg.showPopup({
+                title: 'NFT',
+                message: 'Ваши NFT коллекции появятся здесь',
+                buttons: [{type: 'ok'}]
+            });
+        } else if (navAction === 'profile') {
+            const userInfo = user ? 
+                `${user.first_name} ${user.last_name || ''}\nID: ${user.id}\nБаланс: 0 OTON` : 
+                'Информация загружается...';
+            
+            tg.showPopup({
+                title: 'Profile',
+                message: userInfo,
+                buttons: [{type: 'ok'}]
+            });
         }
     });
 });
 
 // Функция обновления баланса
 function updateBalance(amount) {
-    document.querySelector('.wallet-balance').textContent = amount;
+    document.querySelectorAll('.wallet-balance').forEach(el => {
+        el.textContent = amount;
+    });
     
     const data = {
         action: 'update_balance',
@@ -158,17 +288,6 @@ function updateBalance(amount) {
     };
     tg.sendData(JSON.stringify(data));
 }
-
-// Обработка закрытия попапов
-tg.onEvent('popupClosed', function(event) {
-    if (event.button_id === 'replenish') {
-        tg.showPopup({
-            title: 'Пополнение',
-            message: 'Функция пополнения скоро появится!',
-            buttons: [{type: 'ok'}]
-        });
-    }
-});
 
 // Отправка данных при закрытии
 window.addEventListener('beforeunload', function() {
@@ -180,4 +299,4 @@ window.addEventListener('beforeunload', function() {
     tg.sendData(JSON.stringify(data));
 });
 
-console.log('Mini App загружен: только нужные кнопки + кошелек в углу');
+console.log('Mini App загружен с страницей My Gift');
