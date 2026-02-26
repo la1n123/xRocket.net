@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="app">
-        <!-- Шапка точно как на картинке -->
+        <!-- Шапка -->
         <div class="header">
             <div class="balance-row">
                 <span class="balance-number">0</span>
@@ -35,46 +35,51 @@
             <span>Quick find</span>
         </div>
 
-        <!-- Кнопки как на картинке -->
+        <!-- Кнопки -->
         <div class="menu-grid">
-            <!-- Collection -->
             <div class="menu-item" data-action="collection">
                 <i class="fas fa-layer-group"></i>
                 <span>Collection</span>
             </div>
-
-            <!-- Model -->
             <div class="menu-item" data-action="model">
                 <i class="fas fa-cube"></i>
                 <span>Model</span>
             </div>
-
-            <!-- Back -->
             <div class="menu-item" data-action="back">
                 <i class="fas fa-arrow-left"></i>
                 <span>Back</span>
             </div>
-
-            <!-- Store -->
             <div class="menu-item" data-action="store">
                 <i class="fas fa-store"></i>
                 <span>Store</span>
             </div>
-
-            <!-- My gifts (именно так как на картинке) -->
-            <div class="menu-item" id="myGiftsBtn" data-action="gifts">
+            <div class="menu-item" data-action="gifts" id="myGiftsBtn">
                 <i class="fas fa-gift"></i>
                 <span>My gifts</span>
             </div>
-
-            <!-- Season -->
             <div class="menu-item" data-action="season">
                 <i class="fas fa-calendar"></i>
                 <span>Season</span>
             </div>
         </div>
 
-        <!-- Страница My Gifts (скрыта) -->
+        <!-- НИЖНЯЯ НАВИГАЦИЯ - NFT, My gift, Profile -->
+        <div class="bottom-nav">
+            <div class="nav-item" id="nftBtn">
+                <i class="fas fa-image"></i>
+                <span>NFT</span>
+            </div>
+            <div class="nav-item" id="giftBtn">
+                <i class="fas fa-gift"></i>
+                <span>My gift</span>
+            </div>
+            <div class="nav-item" id="profileBtn">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+
+        <!-- Страница My Gifts -->
         <div id="giftsPage" style="display: none;">
             <div class="page-header">
                 <button class="back-btn" id="backFromGifts">←</button>
@@ -85,6 +90,28 @@
                 <div class="gifts-buttons">
                     <button class="replenish-btn" id="replenishBtn">Пополнить</button>
                     <button class="withdraw-btn" id="withdrawBtn">Вывести</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница Profile -->
+        <div id="profilePage" style="display: none;">
+            <div class="page-header">
+                <button class="back-btn" id="backFromProfile">←</button>
+                <h2>Profile</h2>
+            </div>
+            <div class="profile-content">
+                <div class="profile-info">
+                    <p><strong>NFT:</strong> 5</p>
+                    <p><strong>Коллекций:</strong> 3</p>
+                    <p><strong>Подарков:</strong> 2</p>
+                    <p><strong>Зарегистрирован:</strong> 12.03.2024</p>
+                </div>
+                <div class="transactions">
+                    <h3>Последние транзакции</h3>
+                    <p>• Получено NFT (14:30)</p>
+                    <p>• Подарок от @friend (вчера)</p>
+                    <p>• Пополнение (12.03)</p>
                 </div>
             </div>
         </div>
