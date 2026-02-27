@@ -156,9 +156,13 @@
                     </div>
                 </div>
 
-                <!-- Блок кошелька -->
+                <!-- Блок кошелька с выбором типа -->
                 <div class="wallet-section">
                     <div id="walletStatus">Кошелёк не привязан</div>
+                    <div class="wallet-type-selector">
+                        <button id="walletTypeTon" class="wallet-type-btn active">TON</button>
+                        <button id="walletTypeRub" class="wallet-type-btn">RUB</button>
+                    </div>
                     <button id="connectWalletBtn">Привязать кошелёк</button>
                 </div>
 
@@ -239,6 +243,12 @@
                     <h3 id="buyModalTitle">Купить NFT</h3>
                     <p id="buyModalName"></p>
                     <p id="buyModalPrice"></p>
+                    <div class="nft-details">
+                        <div class="detail-row"><span class="detail-label">Срок:</span> <span id="modalTerm" class="detail-value">загрузка...</span></div>
+                        <div class="detail-row"><span class="detail-label">Фон:</span> <span id="modalBackground" class="detail-value">загрузка...</span></div>
+                        <div class="detail-row"><span class="detail-label">Модель:</span> <span id="modalModel" class="detail-value">загрузка...</span></div>
+                        <div class="detail-row"><span class="detail-label">Номер:</span> <span id="modalNumber" class="detail-value">загрузка...</span></div>
+                    </div>
                     <button class="modal-submit" id="confirmBuyBtn" disabled>Купить</button>
                     <button class="modal-close" id="closeBuyModal">Отмена</button>
                     <p id="walletWarning" style="color: #ff8888; display: none;">Сначала привяжите кошелёк</p>
