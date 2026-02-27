@@ -18,7 +18,47 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Базовые имена (можно расширить или повторять)
     const baseNames = [
-        
+        "Whip Cupcake #133069",
+        "Stellar Rocket #37166",
+        "Stellar Rocket #117704",
+        "Diamond Hands #007",
+        "To The Moon #420",
+        "Alien Artifact #999",
+        "Dragon Egg #001",
+        "Magic Sword #123",
+        "Ancient Shield #456",
+        "Cyber Punk #777",
+        "Neon City #888",
+        "Samurai #999",
+        "Golden Coin #111",
+        "Silver Ring #222",
+        "Bronze Medal #333",
+        "Crystal Ball #444",
+        "Magic Hat #555",
+        "Flying Carpet #666",
+        "Treasure Chest #777",
+        "Legendary Sword #888",
+        "Phoenix Feather #001",
+        "Thunder Hammer #002",
+        "Ice Wand #003",
+        "Fire Blade #004",
+        "Shadow Cloak #005",
+        "Light Shield #006",
+        "Dark Helm #007",
+        "Royal Crown #008",
+        "Ancient Tome #009",
+        "Mystic Orb #010",
+        "Elven Bow #011",
+        "Dwarven Axe #012",
+        "Goblin Dagger #013",
+        "Dragon Scale #014",
+        "Unicorn Horn #015",
+        "Pegasus Wing #016",
+        "Griffin Claw #017",
+        "Sphinx Eye #018",
+        "Phoenix Ash #019",
+        "Dragon Heart #020",
+        "Star Dust #021"
     ];
 
     // ========== ЗАГРУЗКА ЦЕН ИЗ JSON ==========
