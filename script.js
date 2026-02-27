@@ -1,11 +1,11 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// ========== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ==========
+// ========== ДАННЫЕ ==========
 const user = tg.initDataUnsafe?.user;
-const TOTAL_NFT = 41; // 41 ФОТОГРАФИЯ
+const TOTAL_NFT = 41; // 41 фото
 
-// Названия для NFT
+// Имена NFT (можно заменить на свои)
 const nftNames = [
     "Whip Cupcake #133069",
     "Stellar Rocket #37166",
@@ -56,12 +56,9 @@ if (nftGrid) {
     for (let i = 1; i <= TOTAL_NFT; i++) {
         const nameIndex = (i - 1) % nftNames.length;
         const price = (Math.random() * 100).toFixed(2);
-        
         nftGrid.innerHTML += `
             <div class="nft-card" data-id="${i}">
-                <img src="images/${i}.jpg" 
-                     alt="NFT ${i}" 
-                     onerror="this.src='https://via.placeholder.com/150/1a1a1a/00ff88?text=NFT+${i}'">
+                <img src="images/${i}.jpg" alt="NFT ${i}" onerror="this.src='https://via.placeholder.com/150/1a1a1a/00ff88?text=NFT+${i}'">
                 <div class="nft-name">${nftNames[nameIndex]}</div>
                 <div class="nft-price">${price} 🏆</div>
             </div>
@@ -71,70 +68,79 @@ if (nftGrid) {
 
 // ========== ПРОФИЛЬ ==========
 if (user) {
-    document.getElementById('profileName').textContent = user.first_name || 'User';
-    document.getElementById('profileId').textContent = user.id || '-';
+    document.getElementById('profileName').textContent = user.first_name || 'Jdjsndnxc';
 }
 
 // ========== НАВИГАЦИЯ ==========
 const storePage = document.getElementById('storePage');
 const giftsPage = document.getElementById('giftsPage');
 const profilePage = document.getElementById('profilePage');
-const giftNavBtn = document.getElementById('giftNavBtn');
-const profileNavBtn = document.getElementById('profileNavBtn');
-const myGiftsBtn = document.getElementById('myGiftsBtn');
-const backFromGifts = document.getElementById('backFromGifts');
-const backFromProfile = document.getElementById('backFromProfile');
+const seasonPage = document.getElementById('seasonPage');
 
-// Функция показа страницы
+const navItems = document.querySelectorAll('.nav-item');
+const backFromProfile = document.getElementById('backFromProfile');
+const backFromSeason = document.getElementById('backFromSeason');
+
 function showPage(page) {
-    storePage.style.display = 'none';
-    giftsPage.style.display = 'none';
-    profilePage.style.display = 'none';
-    
-    if (page === 'store') storePage.style.display = 'block';
-    if (page === 'gifts') giftsPage.style.display = 'block';
-    if (page === 'profile') profilePage.style.display = 'block';
+    storePage.classList.remove('active');
+    giftsPage.classList.remove('active');
+    profilePage.classList.remove('active');
+    seasonPage.classList.remove('active');
+    if (page === 'store') storePage.classList.add('active');
+    if (page === 'gifts') giftsPage.classList.add('active');
+    if (page === 'profile') profilePage.classList.add('active');
+    if (page === 'season') seasonPage.classList.add('active');
 }
 
-// Нижняя навигация
-document.querySelectorAll('.nav-item').forEach(item => {
+navItems.forEach(item => {
     item.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        navItems.forEach(n => n.classList.remove('active'));
         item.classList.add('active');
-        
         const page = item.dataset.page;
         showPage(page);
         tg.HapticFeedback.impactOccurred('light');
     });
 });
 
-// Кнопка My gifts в меню
-myGiftsBtn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.querySelector('[data-page="gifts"]').classList.add('active');
-    showPage('gifts');
-    tg.HapticFeedback.impactOccurred('medium');
-});
-
-// Назад из My gifts
-backFromGifts.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.querySelector('[data-page="store"]').classList.add('active');
-    showPage('store');
-});
-
-// Назад из Profile
 backFromProfile.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    navItems.forEach(n => n.classList.remove('active'));
     document.querySelector('[data-page="store"]').classList.add('active');
     showPage('store');
 });
 
-// ========== МОДАЛКИ ==========
-const replenishModal = document.getElementById('replenishModal');
-const withdrawModal = document.getElementById('withdrawModal');
+backFromSeason.addEventListener('click', () => {
+    navItems.forEach(n => n.classList.remove('active'));
+    document.querySelector('[data-page="store"]').classList.add('active');
+    showPage('store');
+});
+
+// ========== MY GIFTS: ВКЛАДКИ ==========
+const giftTabs = document.querySelectorAll('.gift-tab');
+const giftsTab = document.getElementById('giftsTabContent');
+const offersTab = document.getElementById('offersTabContent');
+const activityTab = document.getElementById('activityTabContent');
+
+giftTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+        giftTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const tabName = this.dataset.tab;
+        giftsTab.style.display = tabName === 'gifts' ? 'block' : 'none';
+        offersTab.style.display = tabName === 'offers' ? 'block' : 'none';
+        activityTab.style.display = tabName === 'activity' ? 'block' : 'none';
+    });
+});
+
+// ========== КНОПКИ В MY GIFTS ==========
 const addBtn = document.getElementById('addBtn');
 const withdrawBtn = document.getElementById('withdrawBtn');
+const sellBtn = document.getElementById('sellBtn');
+const sendBtn = document.getElementById('sendBtn');
+const bundleBtn = document.getElementById('bundleBtn');
+const howToAddLink = document.getElementById('howToAddLink');
+
+const replenishModal = document.getElementById('replenishModal');
+const withdrawModal = document.getElementById('withdrawModal');
 const closeReplenish = document.getElementById('closeReplenish');
 const closeWithdraw = document.getElementById('closeWithdraw');
 const managerLink = document.getElementById('managerLink');
@@ -150,13 +156,25 @@ withdrawBtn.addEventListener('click', () => {
     tg.HapticFeedback.impactOccurred('heavy');
 });
 
-closeReplenish.addEventListener('click', () => {
-    replenishModal.style.display = 'none';
+[sellBtn, sendBtn, bundleBtn].forEach(btn => {
+    btn.addEventListener('click', () => {
+        tg.HapticFeedback.impactOccurred('light');
+        tg.showPopup({
+            title: btn.textContent.trim(),
+            message: 'Функция временно недоступна',
+            buttons: [{type: 'ok'}]
+        });
+    });
 });
 
-closeWithdraw.addEventListener('click', () => {
-    withdrawModal.style.display = 'none';
+howToAddLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    tg.openTelegramLink('https://t.me/xRocketgiftrobot');
 });
+
+// ========== МОДАЛКИ ==========
+closeReplenish.addEventListener('click', () => replenishModal.style.display = 'none');
+closeWithdraw.addEventListener('click', () => withdrawModal.style.display = 'none');
 
 managerLink.addEventListener('click', () => {
     tg.openTelegramLink('https://t.me/ManagerKupiKod');
@@ -164,28 +182,26 @@ managerLink.addEventListener('click', () => {
 });
 
 submitWithdraw.addEventListener('click', () => {
-    const wallet = document.getElementById('tonWallet').value;
-    const card = document.getElementById('cardNumber').value;
-    
-    if (wallet && card) {
-        tg.showPopup({
-            title: 'Заявка отправлена',
-            message: 'Менеджер свяжется с вами',
-            buttons: [{type: 'ok'}]
-        });
-        withdrawModal.style.display = 'none';
-        document.getElementById('tonWallet').value = '';
-        document.getElementById('cardNumber').value = '';
-    } else {
-        tg.showPopup({
-            title: 'Ошибка',
-            message: 'Заполните все поля',
-            buttons: [{type: 'ok'}]
-        });
+    const wallet = document.getElementById('tonWallet').value.trim();
+    const card = document.getElementById('cardNumber').value.trim();
+    if (!wallet || !card) {
+        tg.showPopup({ title: 'Ошибка', message: 'Заполните все поля', buttons: [{type: 'ok'}] });
+        return;
     }
+    tg.HapticFeedback.notificationOccurred('success');
+    tg.showPopup({ title: 'Заявка отправлена', message: 'Менеджер свяжется с вами', buttons: [{type: 'ok'}] });
+    withdrawModal.style.display = 'none';
+    document.getElementById('tonWallet').value = '';
+    document.getElementById('cardNumber').value = '';
 });
 
-// ========== ВКЛАДКИ ==========
+// ========== INVITE FRIENDS ==========
+document.getElementById('inviteBtn').addEventListener('click', () => {
+    const text = 'Присоединяйся к xRocket! Зарабатывай TON и получай кэшбэк!';
+    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent('https://t.me/xRocketgiftrobot')}&text=${encodeURIComponent(text)}`);
+});
+
+// ========== ВКЛАДКИ STORE ==========
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', function() {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -198,22 +214,19 @@ document.querySelectorAll('.nft-card').forEach(card => {
     card.addEventListener('click', function() {
         const id = this.dataset.id;
         const name = this.querySelector('.nft-name').textContent;
-        
         tg.HapticFeedback.impactOccurred('medium');
-        tg.sendData(JSON.stringify({
-            action: 'nft_click',
-            id: id,
-            name: name
-        }));
+        tg.sendData(JSON.stringify({ action: 'nft_click', id, name }));
     });
 });
 
-// ========== ЗАКРЫТИЕ МОДАЛОК ПО КЛИКУ ВНЕ ==========
-window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal')) {
-        replenishModal.style.display = 'none';
-        withdrawModal.style.display = 'none';
-    }
+// ========== ЗАКРЫТИЕ МОДАЛОК ПО КЛИКУ НА ФОН ==========
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            replenishModal.style.display = 'none';
+            withdrawModal.style.display = 'none';
+        }
+    });
 });
 
-console.log(`✅ Загружено ${TOTAL_NFT} NFT`);
+console.log(`✅ Mini App загружен, ${TOTAL_NFT} NFT`);
