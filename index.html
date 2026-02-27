@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="app">
-        <!-- Шапка (видна на всех страницах, кроме профиля – в профиле своя) -->
+        <!-- Шапка -->
         <div id="globalHeader" class="global-header">
             <div class="balance-info">
                 <span class="balance">0 TON</span>
@@ -21,22 +21,19 @@
             </div>
         </div>
 
-        <!-- ========== СТРАНИЦА STORE (ГЛАВНАЯ) ========== -->
+        <!-- СТРАНИЦА STORE (ГЛАВНАЯ) -->
         <div id="storePage" class="page active">
-            <!-- Вкладки -->
             <div class="tabs">
                 <button class="tab active">All items</button>
                 <button class="tab">Collections</button>
                 <button class="tab">Bundles</button>
             </div>
 
-            <!-- Quick find -->
             <div class="quick-find">
                 <i class="fas fa-search"></i>
                 <span>Quick find</span>
             </div>
 
-            <!-- Кнопки Collection, Model, Back, Symbol -->
             <div class="icon-row">
                 <div class="icon-btn" data-action="collection">📂 Collection</div>
                 <div class="icon-btn" data-action="model">🛒 Model</div>
@@ -44,53 +41,28 @@
                 <div class="icon-btn" data-action="symbol">🏷 Symbol</div>
             </div>
 
-            <!-- Список предметов (примеры из скриншота) -->
-            <div class="items-list">
-                <div class="item-card">
-                    <div class="item-icon">🧁</div>
-                    <div class="item-details">
-                        <div class="item-name">Whip Cupcake #133069</div>
-                        <div class="item-price">5.91 🏆</div>
-                    </div>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">🚀</div>
-                    <div class="item-details">
-                        <div class="item-name">Stellar Rocket #37166</div>
-                        <div class="item-price">32.98 🏆</div>
-                    </div>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">🚀</div>
-                    <div class="item-details">
-                        <div class="item-name">Stellar Rocket #117704</div>
-                        <div class="item-price">16.28 🏆</div>
-                    </div>
-                </div>
-            </div>
+            <!-- СЕТКА NFT 3 В РЯД -->
+            <div class="nft-grid" id="nftGrid"></div>
         </div>
 
-        <!-- ========== СТРАНИЦА MY GIFTS ========== -->
+        <!-- СТРАНИЦА MY GIFTS -->
         <div id="giftsPage" class="page">
-            <!-- Заголовок и вкладки -->
             <div class="page-header">
+                <button class="back-btn" id="backFromGifts"><i class="fas fa-arrow-left"></i></button>
                 <h2>Gifts</h2>
-                <div class="gift-tabs">
-                    <button class="gift-tab active" data-gift="gifts">Gifts</button>
-                    <button class="gift-tab" data-gift="offers">Offers</button>
-                    <button class="gift-tab" data-gift="activity">My activity</button>
-                </div>
+            </div>
+            <div class="gift-tabs">
+                <button class="gift-tab active" data-gift="gifts">Gifts</button>
+                <button class="gift-tab" data-gift="offers">Offers</button>
+                <button class="gift-tab" data-gift="activity">My activity</button>
             </div>
 
-            <!-- Контент вкладки Gifts (остальные скрыты) -->
             <div id="giftsTabContent" class="gift-content">
-                <!-- Unlisted / Listed -->
                 <div class="listing-row">
                     <div><span class="label">Unlisted</span> <span class="value">0</span></div>
                     <div><span class="label">Listed</span> <span class="value">0</span></div>
                 </div>
 
-                <!-- Кнопки Add, Withdraw, Sell, Send, Bundle -->
                 <div class="action-grid">
                     <button class="action-btn" id="addBtn"><i class="fas fa-plus"></i> Add</button>
                     <button class="action-btn" id="withdrawBtn"><i class="fas fa-arrow-down"></i> Withdraw</button>
@@ -99,21 +71,18 @@
                     <button class="action-btn" id="bundleBtn"><i class="fas fa-layer-group"></i> Bundle</button>
                 </div>
 
-                <!-- Quick find (малый) -->
                 <div class="quick-find small">
                     <i class="fas fa-search"></i>
                     <span>Quick find</span>
                 </div>
 
-                <!-- Collection, Model, Back, Symbol -->
                 <div class="icon-row small">
-                    <div class="icon-btn" data-action="collection">Collection</div>
-                    <div class="icon-btn" data-action="model">Model</div>
-                    <div class="icon-btn" data-action="back">Back</div>
-                    <div class="icon-btn" data-action="symbol">Symbol</div>
+                    <div class="icon-btn">Collection</div>
+                    <div class="icon-btn">Model</div>
+                    <div class="icon-btn">Back</div>
+                    <div class="icon-btn">Symbol</div>
                 </div>
 
-                <!-- Текст про бота -->
                 <div class="bot-info">
                     <p>Any Telegram gifts? You can add them through our bot</p>
                     <a href="#" id="howToAddLink">How do I add gifts?</a>
@@ -123,7 +92,7 @@
             <div id="activityTabContent" class="gift-content" style="display: none;">Activity section</div>
         </div>
 
-        <!-- ========== СТРАНИЦА PROFILE ========== -->
+        <!-- СТРАНИЦА PROFILE -->
         <div id="profilePage" class="page">
             <div class="profile-header">
                 <button class="back-btn" id="backFromProfile"><i class="fas fa-arrow-left"></i></button>
@@ -171,7 +140,7 @@
             </div>
         </div>
 
-        <!-- ========== СТРАНИЦА SEASON (ЗАГЛУШКА) ========== -->
+        <!-- СТРАНИЦА SEASON -->
         <div id="seasonPage" class="page">
             <div class="page-header">
                 <button class="back-btn" id="backFromSeason"><i class="fas fa-arrow-left"></i></button>
@@ -180,7 +149,7 @@
             <div style="padding: 20px; text-align: center;">Season content will appear here</div>
         </div>
 
-        <!-- ========== НИЖНЕЕ МЕНЮ ========== -->
+        <!-- НИЖНЕЕ МЕНЮ -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-page="store">
                 <i class="fas fa-store"></i>
@@ -196,8 +165,7 @@
             </div>
         </nav>
 
-        <!-- ========== МОДАЛКИ ========== -->
-        <!-- Менеджер (Add) -->
+        <!-- МОДАЛКА МЕНЕДЖЕРА -->
         <div id="managerModal" class="modal">
             <div class="modal-overlay">
                 <div class="modal-box">
@@ -209,7 +177,7 @@
             </div>
         </div>
 
-        <!-- Вывод средств (Withdraw) -->
+        <!-- МОДАЛКА ВЫВОДА -->
         <div id="withdrawModal" class="modal">
             <div class="modal-overlay">
                 <div class="modal-box">
