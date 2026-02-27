@@ -1,69 +1,131 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* ===== PROFILE PAGE ===== */
+.profile-content {
+    padding: 0 10px;
 }
 
-body {
-    background: #000;
-    color: #fff;
-}
-
-.app {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px;
-    padding-bottom: 90px;
-    min-height: 100vh;
-    background: #000;
-}
-
-/* Шапка */
-.header {
-    margin-bottom: 30px;
-}
-
-.balance-row {
+.profile-top {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 5px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
 }
 
-.balance-number {
-    font-size: 48px;
+.profile-name {
+    font-size: 22px;
     font-weight: bold;
     color: #fff;
 }
 
-.balance-currency {
-    font-size: 24px;
+.profile-number {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.stat-label {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.stat-sub {
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.cashback-card {
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.cashback-title {
+    color: #00ff88;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.cashback-percent {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cashback-available {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+}
+
+.claim-value {
     color: #00ff88;
     font-weight: 600;
 }
 
-.header-stats {
+.invite-block {
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.invite-title {
+    color: #00ff88;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.invite-description {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.invite-btn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ===== MY GIFT PAGE ===== */
+.gift-tabs {
     display: flex;
     gap: 15px;
-    color: #666;
-    font-size: 14px;
-}
-
-.commission {
-    color: #00ff88;
-}
-
-/* Вкладки */
-.tabs {
-    display: flex;
-    gap: 20px;
     margin-bottom: 20px;
     border-bottom: 1px solid #222;
     padding-bottom: 10px;
 }
 
-.tab {
+.gift-tab {
     background: none;
     border: none;
     color: #666;
@@ -72,283 +134,92 @@ body {
     padding: 5px 0;
 }
 
-.tab.active {
+.gift-tab.active {
     color: #00ff88;
     border-bottom: 2px solid #00ff88;
 }
 
-/* Quick find */
-.quick-find {
+.listing-stats {
+    display: flex;
+    gap: 20px;
     background: #111;
     padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #666;
-    cursor: pointer;
+    border-radius: 12px;
+    margin-bottom: 20px;
 }
 
-.quick-find i {
-    color: #00ff88;
-}
-
-/* Сетка меню */
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.menu-item {
-    background: #111;
-    border-radius: 10px;
-    padding: 20px 10px;
+.listing-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
-.menu-item:hover {
-    background: #1a1a1a;
+.listing-label {
+    color: #888;
+    font-size: 14px;
 }
 
-.menu-item i {
+.listing-value {
     font-size: 24px;
-    color: #00ff88;
-}
-
-.menu-item span {
-    font-size: 12px;
+    font-weight: bold;
     color: #fff;
 }
 
-/* НИЖНЯЯ НАВИГАЦИЯ */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 480px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    padding: 15px 20px;
-    background: #111;
-    border-top: 1px solid #222;
-    z-index: 50;
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.nav-item {
+.action-btn {
+    background: #111;
+    border: 1px solid #222;
+    color: #fff;
+    padding: 12px 5px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    color: #666;
-    transition: color 0.2s;
 }
 
-.nav-item:hover {
+.action-btn i {
     color: #00ff88;
+    font-size: 20px;
 }
 
-.nav-item i {
-    font-size: 22px;
+.quick-find.small {
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-.nav-item span {
-    font-size: 12px;
-}
-
-/* Страница My gifts */
-#giftsPage {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #000;
-    padding: 20px;
-    z-index: 100;
-}
-
-.page-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 50px;
-}
-
-.back-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: #111;
-    border: none;
-    color: #00ff88;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.page-header h2 {
-    font-size: 24px;
-    color: #fff;
-}
-
-.gifts-content {
-    text-align: center;
-    padding-top: 50px;
-}
-
-.gifts-zero {
-    font-size: 72px;
-    font-weight: bold;
-    color: #00ff88;
-    margin-bottom: 40px;
-}
-
-.gifts-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.replenish-btn, .withdraw-btn {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.replenish-btn {
-    background: #00ff88;
-    color: #000;
-}
-
-.withdraw-btn {
-    background: #111;
-    color: #fff;
-    border: 1px solid #333;
-}
-
-/* Страница Profile */
-#profilePage {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #000;
-    padding: 20px;
-    z-index: 100;
-    overflow-y: auto;
-}
-
-.profile-content {
-    margin-top: 20px;
-}
-
-.profile-info {
-    background: #111;
-    padding: 20px;
-    border-radius: 15px;
+.extra-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     margin-bottom: 20px;
 }
 
-.profile-info p {
-    margin: 10px 0;
-    color: #fff;
-}
-
-.profile-info .label {
-    color: #00ff88;
-    width: 100px;
-    display: inline-block;
-}
-
-.transactions {
+.extra-item {
     background: #111;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.transactions h3 {
-    color: #00ff88;
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-
-.transactions p {
-    color: #666;
-    margin: 8px 0;
-    padding: 5px 0;
-    border-bottom: 1px solid #222;
-}
-
-/* Модалка */
-#managerModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 200;
-}
-
-.modal-overlay {
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-box {
-    background: #111;
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 350px;
+    padding: 15px 5px;
     text-align: center;
-}
-
-.modal-box h3 {
-    color: #00ff88;
-    margin-bottom: 15px;
-}
-
-.modal-box p {
-    color: #666;
-    margin-bottom: 15px;
-}
-
-.manager-link {
-    background: #1a1a1a;
-    padding: 15px;
     border-radius: 10px;
-    color: #00ff88;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    color: #fff;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.close-modal {
-    background: #00ff88;
-    color: #000;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
+.gift-info {
+    text-align: center;
+    color: #888;
+    padding: 20px 0;
+}
+
+.gift-info a {
+    color: #00ff88;
+    text-decoration: none;
+    display: block;
+    margin-top: 5px;
 }
