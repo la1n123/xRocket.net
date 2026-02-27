@@ -3,7 +3,7 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// Функция перемешивания массива (алгоритм Фишера-Йетса)
+// Функция перемешивания
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -15,8 +15,33 @@ function shuffleArray(array) {
 document.addEventListener('DOMContentLoaded', async function() {
     const user = tg.initDataUnsafe?.user;
     const TOTAL_NFT = 115;
+    const TON_TO_USD = 2.5; // курс, можно менять
 
-    // Базовые имена (можно расширить или повторять)
+    // Состояние кошелька (загружаем из localStorage)
+    let walletConnected = localStorage.getItem('walletConnected') === 'true';
+    let currency = localStorage.getItem('currency') || 'TON'; // 'TON' или 'USD'
+
+    // Элементы для управления кошельком
+    const walletStatus = document.getElementById('walletStatus');
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+
+    // Элементы переключателя валют
+    const currencyTon = document.getElementById('currencyTon');
+    const currencyUsd = document.getElementById('currencyUsd');
+
+    // Модалка покупки
+    const buyModal = document.getElementById('buyModal');
+    const closeBuyModal = document.getElementById('closeBuyModal');
+    const confirmBuyBtn = document.getElementById('confirmBuyBtn');
+    const buyModalName = document.getElementById('buyModalName');
+    const buyModalPrice = document.getElementById('buyModalPrice');
+    const walletWarning = document.getElementById('walletWarning');
+
+    // Данные карточек (оригинальные цены в TON)
+    let nftItems = [];
+    let pricesInTon = {}; // для быстрого доступа
+
+    // Базовые имена
     const baseNames = [
         "Whip Cupcake #133069",
         "Stellar Rocket #37166",
@@ -61,68 +86,173 @@ document.addEventListener('DOMContentLoaded', async function() {
         "Star Dust #021"
     ];
 
-    // ========== ЗАГРУЗКА ЦЕН ИЗ JSON ==========
+    // Загрузка цен из JSON
     let prices = {};
     try {
         const response = await fetch('prices.json?' + Date.now());
         if (response.ok) {
             prices = await response.json();
             console.log('✅ Цены загружены');
-        } else {
-            console.warn('⚠️ prices.json не найден, случайные цены');
         }
     } catch (e) {
-        console.warn('⚠️ Ошибка загрузки цен', e);
+        console.warn('Ошибка загрузки цен', e);
     }
 
-    // ========== СОЗДАЁМ МАССИВ ВСЕХ КАРТОЧЕК ==========
-    let nftItems = [];
+    // Создаём массив карточек с ценами в TON
     for (let i = 1; i <= TOTAL_NFT; i++) {
         const nameIndex = (i - 1) % baseNames.length;
-        // Уникальное имя (можно добавить номер, чтобы различать)
         const displayName = baseNames[nameIndex] + ` #${i}`;
-        
-        // Цена из JSON или случайная
-        let price = prices[i];
-        if (price === undefined) {
-            price = (Math.random() * 100).toFixed(2);
-        } else {
-            price = Number(price).toFixed(2);
-        }
-        
-        nftItems.push({
-            id: i,
-            name: displayName,
-            price: price
-        });
+        let priceTon = prices[i] !== undefined ? Number(prices[i]) : Number((Math.random() * 100).toFixed(2));
+        pricesInTon[i] = priceTon;
+        nftItems.push({ id: i, name: displayName, priceTon: priceTon });
     }
 
-    // ========== ПЕРЕМЕШИВАЕМ МАССИВ ==========
+    // Перемешиваем
     nftItems = shuffleArray(nftItems);
 
-    // ========== ОТРИСОВЫВАЕМ КАРТОЧКИ В СЛУЧАЙНОМ ПОРЯДКЕ ==========
+    // Функция отображения цены в зависимости от валюты
+    function formatPrice(priceTon) {
+        if (currency === 'TON') {
+            return priceTon.toFixed(2) + ' $';
+        } else {
+            return (priceTon * TON_TO_USD).toFixed(2) + ' $';
+        }
+    }
+
+    // Отрисовка всех карточек
     const nftGrid = document.getElementById('nftGrid');
-    if (nftGrid) {
-        nftGrid.innerHTML = ''; // очищаем
+    function renderNFTs() {
+        if (!nftGrid) return;
+        nftGrid.innerHTML = '';
         nftItems.forEach(item => {
+            const priceDisplay = formatPrice(item.priceTon);
             nftGrid.innerHTML += `
                 <div class="nft-card" data-id="${item.id}">
                     <img src="images/${item.id}.jpg" 
                          alt="NFT ${item.id}" 
                          onerror="this.src='https://via.placeholder.com/150/1a1a1a/00ff88?text=NFT+${item.id}'">
                     <div class="nft-name">${item.name}</div>
-                    <div class="nft-price">${item.price} 🏆</div>
+                    <div class="nft-price">${priceDisplay}</div>
                 </div>
             `;
         });
+        // После отрисовки вешаем обработчики кликов
+        attachNFTClickHandlers();
     }
 
-    // ========== ОСТАЛЬНАЯ ЧАСТЬ КОДА (НАВИГАЦИЯ, МОДАЛКИ И Т.Д.) ==========
-    // Вставь сюда весь остальной код из предыдущего скрипта, 
-    // начиная с "= ПРОФИЛЬ =" и до конца.
-    // Чтобы не дублировать 500 строк, я покажу кратко – но ты должен скопировать 
-    // остальную часть из своего рабочего скрипта.
-    // Например, вот так:
+    // Обработчики кликов по карточкам
+    function attachNFTClickHandlers() {
+        document.querySelectorAll('.nft-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const name = this.querySelector('.nft-name')?.textContent || 'NFT';
+                const priceTon = pricesInTon[id];
+                openBuyModal(id, name, priceTon);
+            });
+        });
+    }
+
+    // Открыть модалку покупки
+    function openBuyModal(id, name, priceTon) {
+        buyModalName.textContent = name;
+        buyModalPrice.textContent = 'Цена: ' + formatPrice(priceTon);
+        if (!walletConnected) {
+            confirmBuyBtn.disabled = true;
+            walletWarning.style.display = 'block';
+        } else {
+            confirmBuyBtn.disabled = false;
+            walletWarning.style.display = 'none';
+        }
+        // Сохраняем ID текущей NFT в data-атрибут кнопки
+        confirmBuyBtn.dataset.nftId = id;
+        buyModal.style.display = 'flex';
+        tg.HapticFeedback?.impactOccurred('medium');
+    }
+
+    // Закрыть модалку покупки
+    closeBuyModal.addEventListener('click', () => {
+        buyModal.style.display = 'none';
+    });
+
+    // Клик по фону модалки
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                buyModal.style.display = 'none';
+            }
+        });
+    });
+
+    // Подтверждение покупки
+    confirmBuyBtn.addEventListener('click', () => {
+        if (!walletConnected) return;
+        const nftId = confirmBuyBtn.dataset.nftId;
+        // Здесь можно отправить данные в бот
+        tg.sendData(JSON.stringify({ action: 'buy_nft', id: nftId }));
+        tg.HapticFeedback?.notificationOccurred('success');
+        tg.showPopup({
+            title: 'Покупка совершена',
+            message: `Вы купили NFT #${nftId}`,
+            buttons: [{type: 'ok'}]
+        });
+        buyModal.style.display = 'none';
+    });
+
+    // ========== ПРИВЯЗКА КОШЕЛЬКА ==========
+    function updateWalletUI() {
+        if (walletConnected) {
+            walletStatus.textContent = 'Кошелёк привязан ✓';
+            walletStatus.classList.add('connected');
+            connectWalletBtn.textContent = 'Изменить кошелёк';
+        } else {
+            walletStatus.textContent = 'Кошелёк не привязан';
+            walletStatus.classList.remove('connected');
+            connectWalletBtn.textContent = 'Привязать кошелёк';
+        }
+    }
+
+    connectWalletBtn.addEventListener('click', () => {
+        // Имитация привязки (можно заменить на реальный диалог)
+        walletConnected = true;
+        localStorage.setItem('walletConnected', 'true');
+        updateWalletUI();
+        // Анимация
+        walletStatus.classList.add('connected-animation');
+        setTimeout(() => walletStatus.classList.remove('connected-animation'), 500);
+        tg.HapticFeedback?.notificationOccurred('success');
+        tg.showPopup({
+            title: 'Кошелёк привязан',
+            message: 'Теперь вы можете покупать NFT',
+            buttons: [{type: 'ok'}]
+        });
+    });
+
+    // ========== ПЕРЕКЛЮЧЕНИЕ ВАЛЮТЫ ==========
+    function setCurrency(newCurrency) {
+        currency = newCurrency;
+        localStorage.setItem('currency', currency);
+        // Обновляем классы кнопок
+        currencyTon.classList.toggle('active', currency === 'TON');
+        currencyUsd.classList.toggle('active', currency === 'USD');
+        // Перерисовываем цены во всех карточках
+        renderNFTs();
+        // Если модалка открыта, обновляем цену в ней
+        if (buyModal.style.display === 'flex') {
+            const id = confirmBuyBtn.dataset.nftId;
+            if (id) {
+                const priceTon = pricesInTon[id];
+                buyModalPrice.textContent = 'Цена: ' + formatPrice(priceTon);
+            }
+        }
+    }
+
+    currencyTon.addEventListener('click', () => setCurrency('TON'));
+    currencyUsd.addEventListener('click', () => setCurrency('USD'));
+
+    // Инициализация UI
+    renderNFTs();
+    updateWalletUI();
+    setCurrency(currency); // установит активную кнопку
 
     // ========== ПРОФИЛЬ ==========
     if (user) {
@@ -244,7 +374,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
-    // ========== МОДАЛКИ ==========
+    // ========== МОДАЛКИ (старые) ==========
     if (closeReplenish) {
         closeReplenish.addEventListener('click', () => {
             if (replenishModal) replenishModal.style.display = 'none';
@@ -294,32 +424,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             tg.HapticFeedback?.impactOccurred('light');
-        });
-    });
-
-    // ========== КЛИК ПО NFT ==========
-    document.querySelectorAll('.nft-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const name = this.querySelector('.nft-name')?.textContent || 'NFT';
-            const price = this.querySelector('.nft-price')?.textContent || '0';
-            tg.HapticFeedback?.impactOccurred('medium');
-            tg.sendData(JSON.stringify({ 
-                action: 'nft_click', 
-                id, 
-                name,
-                price: price.replace('🏆', '').trim()
-            }));
-        });
-    });
-
-    // ========== ЗАКРЫТИЕ МОДАЛОК ПО КЛИКУ НА ФОН ==========
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                if (replenishModal) replenishModal.style.display = 'none';
-                if (withdrawModal) withdrawModal.style.display = 'none';
-            }
         });
     });
 
