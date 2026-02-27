@@ -22,17 +22,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     let walletType = localStorage.getItem('walletType') || 'TON'; // 'TON' или 'RUB'
     let currency = localStorage.getItem('currency') || 'TON'; // 'TON' или 'USD'
 
-    // Элементы для управления кошельком
+    // Элементы
+    const profileAvatar = document.getElementById('profileAvatar');
+    const avatarImg = document.getElementById('avatarImg');
     const walletStatus = document.getElementById('walletStatus');
     const connectWalletBtn = document.getElementById('connectWalletBtn');
     const walletTypeTon = document.getElementById('walletTypeTon');
     const walletTypeRub = document.getElementById('walletTypeRub');
-
-    // Элементы переключателя валют
     const currencyTon = document.getElementById('currencyTon');
     const currencyUsd = document.getElementById('currencyUsd');
-
-    // Модалка покупки
     const buyModal = document.getElementById('buyModal');
     const closeBuyModal = document.getElementById('closeBuyModal');
     const confirmBuyBtn = document.getElementById('confirmBuyBtn');
@@ -48,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let nftItems = [];
     let pricesInTon = {};
 
-    // Базовые имена
+    // Базовые имена NFT
     const baseNames = [
         "Whip Cupcake #133069",
         "Stellar Rocket #37166",
@@ -207,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         buyModal.style.display = 'none';
     });
 
-    // ========== ПРИВЯЗКА КОШЕЛЬКА С ВЫБОРОМ ТИПА ==========
+    // ========== ПРИВЯЗКА КОШЕЛЬКА ==========
     function updateWalletUI() {
         if (walletConnected) {
             walletStatus.textContent = `Кошелёк привязан (${walletType}) ✓`;
@@ -272,14 +270,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     currencyTon.addEventListener('click', () => setCurrency('TON'));
     currencyUsd.addEventListener('click', () => setCurrency('USD'));
 
-    // Инициализация
-    renderNFTs();
-    updateWalletUI();
-    setCurrency(currency);
-
-    if (user) {
-        const profileNameElem = document.getElementById('profileName');
-        if (profileNameElem) profileNameElem.textContent = user.first_name || 'Jdjsndnxc';
+    // ========== ЗАГРУЗКА АВАТАРКИ ПОЛЬЗОВАТЕЛЯ ==========
+    if (user && user.photo_url) {
+        avatarImg.src = user.photo_url;
+    } else {
+        // Если нет фото, оставляем заглушку
+        avatarImg.src = 'https://via.placeholder.com/40/1a1a1a/00ff88?text=User';
     }
 
     // ========== НАВИГАЦИЯ ==========
@@ -311,6 +307,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             tg.HapticFeedback?.impactOccurred('light');
         });
     });
+
+    // Клик по аватарке открывает профиль
+    if (profileAvatar) {
+        profileAvatar.addEventListener('click', () => {
+            navItems.forEach(n => n.classList.remove('active'));
+            const profileNav = document.querySelector('.nav-item[data-page="profile"]');
+            if (profileNav) profileNav.classList.add('active');
+            showPage('profile');
+            tg.HapticFeedback?.impactOccurred('light');
+        });
+    }
 
     if (backFromProfile) {
         backFromProfile.addEventListener('click', () => {
@@ -460,6 +467,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             tg.sendData(JSON.stringify({ action: 'quick_find' }));
         });
     });
+
+    // Инициализация UI
+    renderNFTs();
+    updateWalletUI();
+    setCurrency(currency);
+
+    if (user) {
+        const profileNameElem = document.getElementById('profileName');
+        if (profileNameElem) profileNameElem.textContent = user.first_name || 'Jdjsndnxc';
+    }
 
     console.log(`✅ Mini App загружен, ${TOTAL_NFT} NFT`);
 });
