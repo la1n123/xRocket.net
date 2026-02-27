@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>xRocket</title>
-    <!-- Telegram Web App SDK (всегда первым) -->
+    <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <!-- Стили -->
     <link rel="stylesheet" href="style.css">
-    <!-- Иконки Font Awesome (опционально) -->
+    <!-- Иконки Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -23,9 +23,14 @@
                 <span>3 collections</span>
                 <span class="commission">Commission 0%</span>
             </div>
+            <!-- Переключатель валюты -->
+            <div class="currency-switcher">
+                <button id="currencyTon" class="currency-btn active">TON</button>
+                <button id="currencyUsd" class="currency-btn">USD</button>
+            </div>
         </div>
 
-        <!-- ========== СТРАНИЦА STORE ========== -->
+        <!-- СТРАНИЦА STORE -->
         <div id="storePage" class="page active">
             <!-- Вкладки -->
             <div class="tabs">
@@ -52,7 +57,7 @@
             <div class="nft-grid" id="nftGrid"></div>
         </div>
 
-        <!-- ========== СТРАНИЦА MY GIFTS ========== -->
+        <!-- СТРАНИЦА MY GIFTS -->
         <div id="giftsPage" class="page">
             <div class="gifts-header">
                 <h2>Gifts</h2>
@@ -110,7 +115,7 @@
             <div id="activityTabContent" class="gift-tab-content" style="display: none;">Activity content</div>
         </div>
 
-        <!-- ========== СТРАНИЦА PROFILE ========== -->
+        <!-- СТРАНИЦА PROFILE -->
         <div id="profilePage" class="page">
             <div class="profile-header">
                 <div class="profile-title">Profile</div>
@@ -118,11 +123,13 @@
             </div>
 
             <div class="profile-content">
+                <!-- Верхний блок с именем -->
                 <div class="profile-name-block">
                     <span class="profile-name" id="profileName">Jdjsndnxc</span>
                     <span class="profile-number">#1000+</span>
                 </div>
 
+                <!-- Inventory Cost / Total Volume -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">Inventory Cost</div>
@@ -135,6 +142,7 @@
                     </div>
                 </div>
 
+                <!-- Cashback Bonus -->
                 <div class="cashback-card">
                     <div class="cashback-title">CASHBACK BONUS</div>
                     <div class="cashback-percent">0% / Level 0</div>
@@ -148,6 +156,13 @@
                     </div>
                 </div>
 
+                <!-- Блок кошелька -->
+                <div class="wallet-section">
+                    <div id="walletStatus">Кошелёк не привязан</div>
+                    <button id="connectWalletBtn">Привязать кошелёк</button>
+                </div>
+
+                <!-- Invite friends -->
                 <div class="invite-block">
                     <div class="invite-title">INVITE FRIENDS AND EARN TON</div>
                     <div class="invite-description">
@@ -159,7 +174,7 @@
             </div>
         </div>
 
-        <!-- ========== СТРАНИЦА SEASON ========== -->
+        <!-- СТРАНИЦА SEASON -->
         <div id="seasonPage" class="page">
             <div class="season-header">
                 <button class="back-btn" id="backFromSeason"><i class="fas fa-arrow-left"></i></button>
@@ -168,7 +183,7 @@
             <div class="season-placeholder">Season content will appear here</div>
         </div>
 
-        <!-- ========== НИЖНЯЯ НАВИГАЦИЯ ========== -->
+        <!-- НИЖНЯЯ НАВИГАЦИЯ -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-page="store">
                 <i class="fas fa-store"></i>
@@ -184,8 +199,7 @@
             </div>
         </nav>
 
-        <!-- МОДАЛКИ -->
-        <!-- Add / Пополнение -->
+        <!-- МОДАЛКА ПОПОЛНЕНИЯ (Add) -->
         <div id="replenishModal" class="modal">
             <div class="modal-overlay">
                 <div class="modal-box">
@@ -197,7 +211,7 @@
             </div>
         </div>
 
-        <!-- Withdraw / Вывод -->
+        <!-- МОДАЛКА ВЫВОДА (Withdraw) -->
         <div id="withdrawModal" class="modal">
             <div class="modal-overlay">
                 <div class="modal-box">
@@ -217,9 +231,22 @@
                 </div>
             </div>
         </div>
+
+        <!-- МОДАЛКА ПОКУПКИ NFT -->
+        <div id="buyModal" class="modal">
+            <div class="modal-overlay">
+                <div class="modal-box">
+                    <h3 id="buyModalTitle">Купить NFT</h3>
+                    <p id="buyModalName"></p>
+                    <p id="buyModalPrice"></p>
+                    <button class="modal-submit" id="confirmBuyBtn" disabled>Купить</button>
+                    <button class="modal-close" id="closeBuyModal">Отмена</button>
+                    <p id="walletWarning" style="color: #ff8888; display: none;">Сначала привяжите кошелёк</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Наш скрипт (подключается после всех элементов) -->
     <script src="script.js"></script>
 </body>
 </html>
