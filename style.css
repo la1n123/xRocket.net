@@ -422,6 +422,28 @@ body {
     box-shadow: 0 0 10px #00ff88;
 }
 
+/* Переключатель типа кошелька */
+.wallet-type-selector {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+}
+.wallet-type-btn {
+    background: #222;
+    color: #888;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+.wallet-type-btn.active {
+    background: #00ff88;
+    color: #000;
+}
+
 /* Анимация привязки */
 @keyframes pulse {
     0% { transform: scale(1); }
@@ -607,6 +629,32 @@ body {
 .modal-close {
     background: #333;
     color: #fff;
+}
+
+/* Детали NFT в модалке */
+.nft-details {
+    margin: 15px 0;
+    text-align: left;
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 8px;
+}
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #333;
+}
+.detail-row:last-child {
+    border-bottom: none;
+}
+.detail-label {
+    color: #888;
+    font-size: 14px;
+}
+.detail-value {
+    color: #00ff88;
+    font-weight: 600;
 }
 
 /* Предупреждение в модалке покупки */
