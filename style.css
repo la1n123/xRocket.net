@@ -21,6 +21,10 @@ body {
 
 /* ШАПКА */
 .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
@@ -28,7 +32,6 @@ body {
     display: flex;
     align-items: baseline;
     gap: 8px;
-    margin-bottom: 5px;
 }
 
 .balance-number {
@@ -51,6 +54,27 @@ body {
 
 .commission {
     color: #00ff88;
+}
+
+/* Переключатель валюты */
+.currency-switcher {
+    display: flex;
+    gap: 5px;
+    margin-left: auto;
+}
+.currency-btn {
+    background: #222;
+    color: #888;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+.currency-btn.active {
+    background: #00ff88;
+    color: #000;
 }
 
 /* ВКЛАДКИ STORE */
@@ -366,11 +390,54 @@ body {
     font-weight: bold;
 }
 
+/* Блок кошелька в профиле */
+.wallet-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #111;
+    border-radius: 12px;
+    text-align: center;
+}
+#walletStatus {
+    margin-bottom: 10px;
+    color: #888;
+    font-size: 14px;
+}
+#walletStatus.connected {
+    color: #00ff88;
+    font-weight: 600;
+}
+#connectWalletBtn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#connectWalletBtn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px #00ff88;
+}
+
+/* Анимация привязки */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.connected-animation {
+    animation: pulse 0.5s;
+}
+
 .invite-block {
     background: #111;
     padding: 20px;
     border-radius: 12px;
     text-align: center;
+    margin-top: 20px;
 }
 
 .invite-title {
@@ -540,4 +607,10 @@ body {
 .modal-close {
     background: #333;
     color: #fff;
+}
+
+/* Предупреждение в модалке покупки */
+#walletWarning {
+    margin-top: 10px;
+    font-size: 14px;
 }
